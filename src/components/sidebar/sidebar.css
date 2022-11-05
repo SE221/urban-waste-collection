@@ -1,0 +1,72 @@
+.sidebar {
+  flex: 1;
+  border-right: 0.5px solid rgb(230, 227, 227);
+  min-height: 100vh;
+  background-color: white;
+}
+
+.sidebar > .top {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  /* color: #6439ff; */
+  color: #1977f3;
+  padding-top: 15px;
+}
+
+.sidebar > hr {
+  height: 0;
+  border: 0.5px solid rgb(230, 227, 227);
+}
+
+.sidebar > .center {
+  padding-left: 10px;
+}
+
+.title {
+  font-size: 10px;
+  font-weight: bold;
+  color: #999;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+.icon {
+  color: #1977f3;
+}
+.sidebar > .center > ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+li {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+li:hover {
+  background-color: #ece8ff;
+}
+
+.sidebar > .center > ul span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  margin-left: 10px;
+}
+.avatar1 {
+  margin-top: 7px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: white;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/2/28/Earth_recycle.svg);
+  background-size: cover;
+  background-position: center;
+}

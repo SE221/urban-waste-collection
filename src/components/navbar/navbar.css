@@ -1,0 +1,49 @@
+.navbar {
+  height: 67px;
+  border-bottom: 1px solid rgb(231, 228, 228);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 10px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.items {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  position: relative;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/e/e8/Human-emblem-people-green-128.png);
+  background-size: cover;
+  background-position: center;
+}
+.primary-button {
+  padding: .6rem;
+  width: 10rem;
+  background: white;
+  border: none;
+  color: black;
+  font-size: 1.2rem;
+  transition: all .5s;
+  cursor: pointer;
+  text-transform: capitalize
+}
