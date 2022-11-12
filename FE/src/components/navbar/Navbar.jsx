@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="wrapper">
         <div className="items">
           <div className="item">
-            <a className="primary-button" href='/contact'>Contact</a>
+            <a className="primary-button-noiden" href='/contact'>Contact</a>
             <Dropdown>
             <Dropdown.Toggle className="avatar">
             </Dropdown.Toggle>

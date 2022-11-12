@@ -29,22 +29,22 @@ const Sidebar = () => {
           <Link to="/staff" style={{ textDecoration: "none" }}>
             <li>
               <PeopleAltRoundedIcon className="icon" />
-              <span>Staff</span>
+              <span>Workers</span>
             </li>
           </Link>
-          <Link to="/mcp" style={{ textDecoration: "none" }}>
+          <Link to="/message" style={{ textDecoration: "none" }}>
             <li>
               <CookieRoundedIcon className="icon" />
-              <span>MCP</span>
+              <span>Message</span>
             </li>
           </Link>
-          <Link to="/vehicle" style={{ textDecoration: "none" }}>
+          <Link to="/rp" style={{ textDecoration: "none" }}>
             <li>
               <CookieRoundedIcon className="icon" />
-              <span>Vehicle</span>
+              <span>Route Planning</span>
             </li>
           </Link>
-          <Link to="/taskassignment" style={{ textDecoration: "none" }}>
+          <Link to="/taskA" style={{ textDecoration: "none" }}>
             <li>
               <CookieRoundedIcon className="icon" />
               <span>Task Assignment</span>

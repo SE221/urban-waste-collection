@@ -15,7 +15,7 @@ const Tool = () => {
         <Navbar />
         <div className="content">
           <PageTitle
-            title="Facebook Profile Scraper"
+            title="TITLE"
             description="Description here"
           />
           <ToolCard />
