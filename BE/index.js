@@ -1,23 +1,10 @@
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
+const express = require("express");
+const app = express();
+const usersRouter = require("./src/routes/usersRoute");
+const port = 1337;
 
-const uri = process.env.ATLAS_URI;
+app.use("/api/users", usersRouter);
 
-const client = new MongoClient(uri);
-
-async function run() {
-  console.log("in run function");
-  try {
-    const database = client.db("sample_mflix");
-    const movies = database.collection("movies");
-
-    // Query for a movie that has the title 'Back to the Future'
-    const query = { title: "Back to the Future" };
-    const movie = await movies.findOne(query);
-    console.log(movie);
-  } finally {
-    await client.close();
-  }
-}
-
-run().catch(console.dir);
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
