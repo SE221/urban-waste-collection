@@ -8,7 +8,7 @@ let refreshTokens = [];
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.ACCESS_TOKEN_KEY, {
-    expiresIn: 1000 * 60 * 5,
+    expiresIn: 60 * 60,
   });
 };
 
