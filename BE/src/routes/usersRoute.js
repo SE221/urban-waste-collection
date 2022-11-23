@@ -1,24 +1,28 @@
 const express = require("express");
+const userController = require("../controllers/userController");
+const { auth } = require("../helper/auth");
+
 const router = express.Router();
-const dbo = require("../db/config");
 
-router.post("/api/create-test-users", function (req, res) {});
+// get all users
+router.get("/users", auth, userController.findAllUsers);
 
-// Home page route.
-router.post("/api/login", function (req, res) {
-  res.send("Wiki home page");
-});
+// get one user by id
+router.get("/user/:id", auth, userController.findUser);
 
-// About page route.
-router.get("/", async function (req, res) {
-  console.log("in router");
-  const dbConnect = dbo.getDb();
-  console.log({ dbConnect });
-  const users = dbConnect.collection("Users");
-  console.log({ users });
-  const all = await users.findOne({ ID: "C1410" });
-  console.log({ all });
-  res.send("hello");
-});
+// create 2 BOs
+router.post("/create-test-bos", userController.createTest);
+
+// register
+router.post("/register", userController.register);
+
+// login
+router.post("/login", userController.login);
+
+// logout
+router.delete("/logout", userController.logout);
+
+// generate access token
+router.post("/generate-access-token", userController.generateAccessToken);
 
 module.exports = router;
