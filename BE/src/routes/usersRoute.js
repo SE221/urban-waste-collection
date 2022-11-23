@@ -4,7 +4,10 @@ const { auth } = require("../helper/auth");
 
 const router = express.Router();
 
-// get all users
+// get all users (!!! including BO !!!)
+router.get("/users", auth, userController.findAllUsers);
+
+// get all workers
 router.get("/workers", auth, userController.findAllWorkers);
 
 // get one user by id

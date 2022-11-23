@@ -12,6 +12,11 @@ const generateToken = (userId) => {
   });
 };
 
+exports.findAllUsers = async (req, res) => {
+  const allUsers = await db.collection("Users").find({}).toArray();
+  return res.send(allUsers);
+};
+
 exports.findAllWorkers = async (req, res) => {
   const allUsers = await db.collection("Users").find({}).toArray();
   const allWorkers = allUsers.filter((user) => user.Role !== "BO");
