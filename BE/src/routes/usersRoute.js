@@ -5,7 +5,7 @@ const { auth } = require("../helper/auth");
 const router = express.Router();
 
 // get all users
-router.get("/users", auth, userController.findAllUsers);
+router.get("/workers", auth, userController.findAllWorkers);
 
 // get one user by id
 router.get("/user/:id", auth, userController.findUser);

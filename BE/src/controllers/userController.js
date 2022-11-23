@@ -12,9 +12,10 @@ const generateToken = (userId) => {
   });
 };
 
-exports.findAllUsers = async (req, res) => {
+exports.findAllWorkers = async (req, res) => {
   const allUsers = await db.collection("Users").find({}).toArray();
-  return res.send(allUsers);
+  const allWorkers = allUsers.filter((user) => user.Role !== "BO");
+  return res.send(allWorkers);
 };
 
 exports.findUser = async (req, res) => {
