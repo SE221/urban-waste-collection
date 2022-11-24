@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/authen/Login";
 import Signup from "./pages/authen/Signup"
 // import { Signup } from "./pages/Signup/Signup";
-import { Home } from "./pages/BO/Home"
+// import { Home } from "./pages/BO/Home"
+import Home from './pages/BO/Home';
 import { HomeJan } from "./pages/Janitor/HomeJan"
 import { HomeCol } from "./pages/Collector/HomeCol"
 // import { Home } from './pages/home/Home';
@@ -16,7 +17,10 @@ import TA from './pages/BO/TaskAssignment/TaskA';
 import Contact from './pages/contact/contact';
 import Route_Planning from './pages/BO/Route Planning/Rp';
 import ChatApp from './pages/BO/Message/chatpage';
-import Messages from './pages/BO/Message/Mess'
+import Messages from './pages/BO/Message/Mess';
+import StarterMap from './pages/BO/table';
+// import Workers from './pages/BO/Staff/table';
+import WORKERS from './pages/BO/Staff/WORKERS/App';
 function App() {
   return (
     <BrowserRouter>
@@ -39,6 +43,9 @@ function App() {
         <Route path='/taskA'element={<TA/>}/>
         <Route path='/contact'element={<Contact/>}/>
         <Route path='/rp'element={<Route_Planning/>}/>
+        <Route path='/tool'element={<Tool/>}/>
+        <Route path='/map'element={<StarterMap/>}/>
+
       </Routes>
     </BrowserRouter>
   );

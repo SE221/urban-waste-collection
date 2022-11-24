@@ -1,30 +1,29 @@
 export const COLUMNS = [
     {
-        Header: 'ID',
-        accessor: 'id'
+        label: 'WID',
+        accessor: 'wid'
     },
     {
-        Header: 'First Name',
-        accessor: 'first_name'
+        label: 'Name',
+        accessor: 'name'
     },
     {
-        Header: 'Last Name',
-        accessor: 'last_name'
-    },
-    {
-        Header: 'City',
-        accessor: 'city'
-    },
-    {
-        Header: 'Age',
-        accessor: 'age'
-    },
-    {
-        Header: 'Role',
+        label: 'Role',
         accessor: 'role'
     },
     {
-        Header: 'Phone',
+        label: 'YoB',
+        accessor: 'year'
+    },
+ 
+    {
+        label: 'Phone',
         accessor: 'phone'
-    }
+    },
+
+    { accessor: 'active', label: 'Active', format: (value) => (value ? '✔️' : '✖️') },
+    {
+        label: 'View',
+        accessor: 'view'
+    },
 ];

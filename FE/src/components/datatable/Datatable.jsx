@@ -1,33 +1,44 @@
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import {  DataGrid } from "@mui/x-data-grid";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "Name", width: 130 },
-  { field: "age", headerName: "Age", width: 90 },
-  { field: "role", headerName: "Role", width: 90 },
-  { field: "phone", headerName: "Phone Number", width: 150 },
+  {headerClassName: 'super-app-theme--header', field: "id", headerName: "ID", width: 70,},
+  {headerClassName: 'super-app-theme--header', field: "name", headerName: "Name", width: 200 },
+  {headerClassName: 'super-app-theme--header', field: "role", headerName: "Role", width: 110 }
 ];
 
-const rows = [
-  { id: 1, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 2, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 3, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 4, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 5, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 6, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
-  { id: 7, name: "Le Huy", age: 35, role: 'Janitor', phone: '666'},
+const rows  = [
+  { id: 1, name: "Le Huy", age: 35, role: 'Collector'},
+  { id: 2, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 3, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 4, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 5, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 6, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 7, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 8, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 9, name: "Le Huy", age: 35, role: 'Janitor'},
+  { id: 10, name: "Le Huy", age: 35, role: 'Janitor'},
 ];
-
+rows.height=1 ;
 const Datatable = () => {
+  // DataGrid.rows.height=5;
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 300, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
+        pageSize={100}
+        rowsPerPageOptions={[100]}
+        sx={{ 
+          boxShadow: 2,
+
+          '& .super-app-theme--header': {
+          backgroundColor: ' #888888',
+          fontWeight: "bold" ,
+          height:10,
+        },
+        
+          }}
       />
     </div>
   );

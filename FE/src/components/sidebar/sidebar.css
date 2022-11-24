@@ -70,3 +70,8 @@ li:hover {
   background-size: cover;
   background-position: center;
 }
+.num { float:right;
+  align-items: right;
+ }
+.name { float:left;
+  position: relative; } 
