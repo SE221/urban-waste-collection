@@ -2,6 +2,7 @@ import React from "react";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import CookieRoundedIcon from "@mui/icons-material/CookieRounded";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
+import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
 
 import "./sidebar.css";
@@ -11,8 +12,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" className="avatar1" style={{ textDecoration: "none" }}>
-          <span >
-          </span>
+          <span></span>
         </Link>
       </div>
       <hr />
@@ -21,7 +21,7 @@ const Sidebar = () => {
           <p className="title">MAIN</p>
           <Link to="/" style={{ textDecoration: "none" }}>
             <li>
-              <GridViewRoundedIcon className="icon" />
+              <HomeIcon className="icon" />
               <span>Home</span>
             </li>
           </Link>

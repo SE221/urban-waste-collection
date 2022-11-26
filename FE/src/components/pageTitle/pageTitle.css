@@ -1,6 +1,7 @@
 .title {
   font-family: "Nunito Sans", sans-serif;
-  color: #888888;
+  color: #666666;
+  font-weight: bold !important;
 }
 
 .h4 {
