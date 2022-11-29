@@ -1,0 +1,174 @@
+const bcrypt = require("bcrypt");
+const dbo = require("../db/config");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const db = dbo.getDb();
+let refreshTokens = [];
+
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_KEY, {
+    expiresIn: 60 * 60,
+  });
+};
+
+exports.findAllUsers = async (req, res) => {
+  const allUsers = await db.collection("Users").find({}).toArray();
+  return res.send(allUsers);
+};
+
+exports.findAllWorkers = async (req, res) => {
+  const allUsers = await db.collection("Users").find({}).toArray();
+  const allWorkers = allUsers.filter((user) => user.Role !== "BO");
+  return res.send(allWorkers);
+};
+
+exports.findUser = async (req, res) => {
+  const user = await db.collection("Users").findOne({ ID: req.params.id });
+  return res.send(user);
+};
+
+exports.createTest = async (req, res) => {
+  const bo1 = {
+    ID: "B0001",
+    Name: "Nguyen Van Ay",
+    DoB: "1978-02-14",
+    Sex: "M",
+    Role: "BO",
+    "Phone Number": "0987145752",
+    "Email Address": "aynguyen@gmail.com",
+    Password: "123456",
+  };
+  const bo2 = {
+    ID: "B0002",
+    Name: "Nguyen Van Bi",
+    DoB: "1973-05-25",
+    Sex: "F",
+    Role: "BO",
+    "Phone Number": "0957459226",
+    "Email Address": "binguyen@gmail.com",
+    Password: "12345678",
+  };
+
+  bo1.Password = await bcrypt.hash(bo1.Password, 10);
+  bo2.Password = await bcrypt.hash(bo2.Password, 10);
+
+  const check1 = await db.collection("Users").findOne({ ID: "B0001" });
+  const check2 = await db.collection("Users").findOne({ ID: "B0002" });
+
+  if (check1 || check2) {
+    res.status(500).send("BOs already exists.");
+    return;
+  }
+
+  await db.collection("Users").insertMany([bo1, bo2]);
+
+  res.send({ bo1, bo2 });
+};
+
+exports.register = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // should handle in frontend
+  if (!email || !password) {
+    return res.status(401).send("Missing email address or password");
+  }
+
+  const user = await db.collection("Users").findOne({ "Email Address": email });
+
+  if (user) {
+    return res.status(409).send("Email address already exists");
+  }
+
+  // generate ID
+  const ran = Math.floor(Math.random() * 9000 + 1000);
+  const id = `B${ran}`;
+  const checkId = await db.collection("Users").findOne({ ID: id });
+
+  if (checkId) {
+    return res.status(500).send("ID already exists");
+  }
+
+  const newUser = {
+    ID: id,
+    "Email Address": email,
+    Password: await bcrypt.hash(password, 10),
+    Role: "BO",
+  };
+
+  await db.collection("Users").insertOne(newUser);
+
+  return res.send("Successfully register new BO account");
+};
+
+exports.login = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // should handle in frontend
+  if (!email || !password) {
+    return res.status(401).send("Missing email address or password");
+  }
+
+  const user = await db.collection("Users").findOne({ "Email Address": email });
+
+  if (!user) {
+    return res.status(404).send("Email address not found");
+  }
+
+  const isPassValid = await bcrypt.compare(password, user.Password);
+
+  if (!isPassValid) {
+    return res.status(401).send("Invalid email address or password");
+  }
+
+  const accessToken = generateToken(user.ID);
+
+  const refreshToken = jwt.sign(
+    { userId: user.ID },
+    process.env.REFRESH_TOKEN_KEY
+  );
+
+  refreshTokens.push(refreshToken);
+  console.log({ refreshTokens });
+
+  return res.send({ accessToken, refreshToken });
+};
+
+exports.logout = async (req, res) => {
+  refreshTokens = refreshTokens.filter(
+    (token) => token !== req.body.refreshToken
+  );
+  console.log("refreshTokens array after filtering: ", refreshTokens);
+
+  return res.status(204).send("Logout successfully");
+};
+
+exports.generateAccessToken = async (req, res) => {
+  const refreshToken = req.body.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).send("Missing token");
+  }
+
+  if (!refreshTokens.includes(refreshToken)) {
+    return res.status(403).send("No permission");
+  }
+
+  let tokenUser;
+
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).send("No permission");
+    }
+    console.log(user);
+
+    tokenUser = user;
+  });
+
+  const accessToken = generateToken(tokenUser.userId);
+  console.log("new accessToken: ", accessToken);
+
+  return res.send({ accessToken });
+};
