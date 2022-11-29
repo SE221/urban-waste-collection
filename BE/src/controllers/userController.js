@@ -23,6 +23,11 @@ exports.findAllWorkers = async (req, res) => {
   return res.send(allWorkers);
 };
 
+exports.findAllCollectors = async (req, res) => {
+  const allCollectors = await db.collection("Users").find({Role: Collector}).toArray();
+  return res.send(allCollectors);
+};
+
 exports.findUser = async (req, res) => {
   const user = await db.collection("Users").findOne({ ID: req.params.id });
   return res.send(user);

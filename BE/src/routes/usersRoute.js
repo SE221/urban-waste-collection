@@ -26,6 +26,6 @@ router.post("/login", userController.login);
 router.delete("/logout", userController.logout);
 
 // generate access token
-router.post("/generate-access-token", userController.generateAccessToken);
+router.post("/generate-access-token", userController. generateAccessToken);
 
 module.exports = router;
