@@ -2,51 +2,58 @@ import React from "react";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import CookieRoundedIcon from "@mui/icons-material/CookieRounded";
 import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
-import HomeIcon from "@mui/icons-material/Home";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHouse,
+  faTruckMoving,
+  faUserGroup,
+  faTrashCan,
+  faCircleArrowDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
+import logo from "../../assets/images/UWC.png";
 import "./sidebar.css";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" className="avatar1" style={{ textDecoration: "none" }}>
-          <span></span>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <span className="avatar1">
+            <img src={logo} className="uwc-logo" />
+          </span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
           <Link to="/" style={{ textDecoration: "none" }}>
             <li>
-              <HomeIcon className="icon" />
+              <FontAwesomeIcon icon={faHouse} />
               <span>Home</span>
             </li>
           </Link>
-          <p className="title">SERVICE</p>
           <Link to="/staff" style={{ textDecoration: "none" }}>
             <li>
-              <PeopleAltRoundedIcon className="icon" />
+              <FontAwesomeIcon icon={faUserGroup} />
               <span>Workers</span>
             </li>
           </Link>
-          <Link to="/message" style={{ textDecoration: "none" }}>
+          <Link to="/staff" style={{ textDecoration: "none" }}>
             <li>
-              <CookieRoundedIcon className="icon" />
-              <span>Message</span>
+              <FontAwesomeIcon icon={faTruckMoving} />
+              <span>Vehicles</span>
             </li>
           </Link>
           <Link to="/rp" style={{ textDecoration: "none" }}>
             <li>
-              <CookieRoundedIcon className="icon" />
-              <span>Route Planning</span>
+              <FontAwesomeIcon icon={faTrashCan} />
+              <span>MCP</span>
             </li>
           </Link>
           <Link to="/taskA" style={{ textDecoration: "none" }}>
             <li>
-              <CookieRoundedIcon className="icon" />
+              <FontAwesomeIcon icon={faCircleArrowDown} />
               <span>Task Assignment</span>
             </li>
           </Link>

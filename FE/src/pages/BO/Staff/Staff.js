@@ -43,7 +43,6 @@ function Staff() {
       <div className="toolContainer">
         <Navbar />
         <div className="content">
-          <PageTitle title="Workers List" />
           <div>
             <Table columns={COLUMNS} data={posts} />
           </div>

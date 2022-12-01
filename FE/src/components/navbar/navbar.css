@@ -1,5 +1,5 @@
 .navbar {
-  height: 67px;
+  height: 97px;
   border-bottom: 1px solid rgb(231, 228, 228);
   display: flex;
   align-items: center;
@@ -11,8 +11,9 @@
   width: 100%;
   padding: 10px 20px 20px;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: left;
+  justify-content: space-between;
 }
 
 .items {
@@ -37,13 +38,13 @@
   background-position: center;
 }
 .primary-button-noiden {
-  padding: .6rem;
+  padding: 0.6rem;
   width: 10rem;
   background: white;
   border: none;
   color: black;
   font-size: 1.2rem;
-  transition: all .5s;
+  transition: all 0.5s;
   cursor: pointer;
-  text-transform: capitalize
+  text-transform: capitalize;
 }

@@ -34,7 +34,6 @@
 }
 
 .form-textarea::placeholder {
-  font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
 }
 
@@ -48,10 +47,10 @@
   .form {
     display: grid;
     grid-template-areas:
-      'header .'
-      'name message'
-      'tel message'
-      'email submit';
+      "header ."
+      "name message"
+      "tel message"
+      "email submit";
     align-items: start;
     align-content: space-between;
     justify-content: unset;
