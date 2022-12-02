@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../../components/sidebar/SidebarCol";
-import Navbar from "../../components/navbar/Navbar";
-import PageTitle from "../../components/pageTitle/PageTitle";
+import Sidebar from "../../components/Sidebar/SidebarCol";
+import Navbar from "../../components/Navbar/Navbar";
+import PageTitle from "../../components/PageTitle/PageTitle";
 import { CookieCard } from "../../components/Card/Card";
 
 import "./cookies.css";
