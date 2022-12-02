@@ -27,3 +27,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJCNjYwO
 ################################
 GET http://localhost:1337/api/mcps
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJCNjYwOSIsImlhdCI6MTY2OTk4MjE4MSwiZXhwIjoxNjY5OTg1NzgxfQ.JTKGLe91x9EqTq7_4CdJn-MCMq6gm-RvoIesFAR-4B8
+################################
+GET http://localhost:1337/api/overloaded-mcps
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJCNjYwOSIsImlhdCI6MTY2OTk4MjE4MSwiZXhwIjoxNjY5OTg1NzgxfQ.JTKGLe91x9EqTq7_4CdJn-MCMq6gm-RvoIesFAR-4B8
