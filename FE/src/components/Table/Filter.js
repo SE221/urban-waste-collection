@@ -2,16 +2,17 @@ import React from "react";
 import "./Filter.css";
 import SearchIcon from "@mui/icons-material/Search";
 
-export const Filter = ({ filter, setFilter }) => {
+export const Filter = ({ filter, setFilter, placeholder }) => {
   return (
     <label>
-      <span>
+      <span className="search-icon">
         <SearchIcon />
       </span>
 
       <input
         value={filter || ""}
-        placeholder={"Search worker here..."}
+        placeholder={placeholder}
+        className="search-input"
         onChange={(e) => setFilter(e.target.value)}
       />
     </label>

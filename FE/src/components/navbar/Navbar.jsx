@@ -1,17 +1,22 @@
 import React from "react";
 import "./navbar.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import PageTitle from "../PageTitle/PageTitle";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <div className="navbar">
       <div className="wrapper">
-        <PageTitle title="Workers List" />
+        <PageTitle title={props.pageTitle} />
         <div className="item">
-          <a className="primary-button-noiden" href="/contact">
-            Contact
-          </a>
+          <Button variant="success">Contact</Button>{" "}
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <FontAwesomeIcon icon={faEnvelope} className="nav-icon" />
+          </Link>
           <Dropdown>
             <Dropdown.Toggle className="avatar"></Dropdown.Toggle>
             <Dropdown.Menu>

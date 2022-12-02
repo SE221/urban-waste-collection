@@ -2,15 +2,14 @@
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import "../../Tool/tool.css";
-import PageTitle from "../../../components/PageTitle/PageTitle";
 
 import React, { useState, useEffect } from "react";
 import { COLUMNS } from "./ultis/columns";
-import { Table } from "./component/Table";
+import { Table } from "../../../components/Table/Table.jsx";
 import axios from "axios";
 
 function Staff() {
-  const [posts, setPosts] = useState([]);
+  const [workers, setWorkers] = useState([]);
 
   useEffect(() => {
     axios
@@ -30,7 +29,7 @@ function Staff() {
             phone: obj.phone,
           };
         });
-        setPosts(data);
+        setWorkers(data);
       })
       .catch((err) => {
         console.log(err);
@@ -41,10 +40,14 @@ function Staff() {
     <div className="tool">
       <Sidebar />
       <div className="toolContainer">
-        <Navbar />
+        <Navbar pageTitle="Workers" />
         <div className="content">
           <div>
-            <Table columns={COLUMNS} data={posts} />
+            <Table
+              columns={COLUMNS}
+              data={workers}
+              placeholder={"Search worker here..."}
+            />
           </div>
         </div>
       </div>

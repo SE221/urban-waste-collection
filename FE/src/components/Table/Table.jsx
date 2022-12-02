@@ -3,12 +3,25 @@ import { useTable, useGlobalFilter, useSortBy } from "react-table";
 import { Filter } from "./Filter";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { Pagination } from "react-bootstrap";
 import "./Table.css";
+import TableFooter from "./TableFooter";
+
+let active = 2;
+let items = [];
+for (let i = 1; i <= 5; ++i) {
+  items.push(
+    <Pagination.Item key={i} active={i === active}>
+      {i}
+    </Pagination.Item>
+  );
+}
 
 export const Table = (props) => {
   const columns = props.columns;
   const data = props.data;
-
+  const rowsPerPage = props.rowsPerPage;
+  const totalRows = props.totalRows;
   const {
     getTableProps,
     getTableBodyProps,
@@ -28,10 +41,13 @@ export const Table = (props) => {
 
   const { globalFilter } = state;
   const propps = getTableProps();
-  console.log({ propps });
   return (
     <div>
-      <Filter filter={globalFilter} setFilter={setGlobalFilter} />
+      <Filter
+        filter={globalFilter}
+        setFilter={setGlobalFilter}
+        placeholder={props.placeholder}
+      />
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -70,6 +86,7 @@ export const Table = (props) => {
           })}
         </tbody>
       </table>
+      <TableFooter rowsPerPage={rowsPerPage} totalRows={totalRows} />
     </div>
   );
 };

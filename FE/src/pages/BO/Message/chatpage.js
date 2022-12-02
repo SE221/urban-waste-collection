@@ -4,7 +4,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import "../../Tool/Tool";
 import React, { useState, useEffect } from "react";
 import { COLUMNS } from "./ultis/columns";
-import { Table } from "./component/Table";
+import { Table } from "../../../components/Table/Table";
 import axios from "axios";
 function ChatApp() {
   const [posts, setPosts] = useState([]);
