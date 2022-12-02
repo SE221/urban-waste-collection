@@ -1,0 +1,213 @@
+  //  "not ie 11" ,
+    //  "not chrome < 51",
+    //  "not safari < 10" ,
+    //  " not android < 51"
+import "./TaskA.css";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import React,{useState} from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+// import userdata from './tempData.json';
+// import tasks from './tempData2.json'
+import Sidebar from "../../../components/sidebar/Sidebar";
+import Navbar from "../../../components/navbar/Navbar";
+import '../../tool/tool.css'
+import PageTitle from "../../../components/pageTitle/PageTitle";
+
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import cellEditFactory,{Type} from 'react-bootstrap-table2-editor'
+
+const tasks = [];
+function addTasks(quantity) {
+  const startId = tasks.length;
+  for (let i = 1; i <= quantity; i++) {
+    const id = startId + i;
+    tasks.push({
+      taskid: id,
+      week1: 'mcps ' + id + '-'+1,
+      week2: 'mcps ' + id + '-'+2,
+      week3: 'mcps ' + id + '-'+3,
+      week4: 'mcps ' + id + '-'+4,
+    });
+  }
+}
+addTasks(10);
+const columns = [{
+  dataField: 'taskid',
+  text: 'Tasks ID'
+}, {
+  dataField: 'week1',
+  text: 'Week 1'
+}, {
+  dataField: 'week2',
+  text: 'Week2'
+}, {
+  dataField: 'week3',
+  text: 'Week 3'
+}, {
+  dataField: 'week4',
+  text: 'Week 4'
+}];
+const userdata = [];
+function addWork(quantity) {
+  const startId = userdata.length;
+  for (let i = 1; i <= quantity; i++) {
+    const id = startId + i;
+    userdata.push({
+      id: id,
+      name: 'name of worker ' +id ,
+      role: 'Role of worker ' +id,
+  
+    });
+  }
+}
+addWork(10);
+const columns2 = [{
+  dataField: 'id',
+  text: 'Workers ID'
+}, {
+  dataField: 'name',
+  text: 'Name'
+}, {
+  dataField: 'role',
+  text: 'Role',
+}];
+
+////////////////////////////////////////////////
+
+export default function TA() {
+  const [users, setUsers] = useState(userdata.data);
+  const handleDragEnd = (e) => {
+    if (!e.destination) return;
+    let tempData = Array.from(users);
+    let [source_data] = tempData.splice(e.source.index, 1);
+    tempData.splice(e.destination.index, 0, source_data);
+    setUsers(tempData);
+  };
+  const [task, setTask] = useState(tasks.data);
+  const handleDragEnd2 = (e) => {
+    if (!e.destination) return;
+    let tempData2 = Array.from(task);
+    let [source_data] = tempData2.splice(e.source.index, 1);
+    tempData2.splice(e.destination.index, 0, source_data);
+    setTask(tempData2);
+  };
+  const[showtab, setShowtab]= useState(1);
+
+ const handletab = (e)=>{
+  setShowtab(e);
+    }
+  return (
+    <div className="tool">
+            <Sidebar />
+            <div className="toolContainer">
+            <Navbar />
+                <div className="content">
+                    <PageTitle
+                        title="Assign Task"
+                    />
+
+               
+    <div className="TA mt-4">
+      <React.Fragment>
+                         <ul class="nav nav-pills mb-3 mt-1" id="pills-tab" role="tablist">
+                           <li class="nav-item" role="presentation">
+                            <button className= {showtab===2? "nav-link active": "nav-link" }  onClick={()=>handletab(2)}>Create Task</button>
+                           </li>
+                          </ul>
+     
+        <div class="tab-content text-dark" id="pills-tabContent">
+             <div  className= { showtab===2 ? "tab-pane fade show active":"tab-pane fade show"} > 
+                      <div class="row">
+                        <div class="table-responsive col-md-6">
+            <DragDropContext onDragEnd={handleDragEnd}>
+                       <table className="table borderd">
+          <thead>
+            <tr>
+              <th />
+              <th>Username</th>
+              <th>Age</th>
+              <th>Gender</th>
+            </tr>
+          </thead>
+          <Droppable droppableId="droppable-1">
+            {(provider) => (
+              <tbody
+                className="text-capitalize"
+                ref={provider.innerRef}
+                {...provider.droppableProps}
+              >
+                {users?.map((user, index) => (
+                  <Draggable
+                    key={user.name}
+                    draggableId={user.name}
+                    index={index}
+                  >
+                    {(provider) => (
+                      <tr {...provider.draggableProps} ref={provider.innerRef}>
+                        <td {...provider.dragHandleProps}> = </td>
+                        <td>{user.name}</td>
+                        <td>{user.age}</td>
+                        <td>{user.gender}</td>
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provider.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+                                  </table>
+                                 </DragDropContext>
+                               </div>
+                               <div class="table-responsive col-md-6 ">
+                               <DragDropContext onDragEnd={handleDragEnd2}>
+        <table className="table borderd">
+          <thead>
+            <tr>
+              <th />
+              <th>Username</th>
+              <th>Age</th>
+              <th>Gender</th>
+            </tr>
+          </thead>
+          <Droppable droppableId="droppable-1">
+            {(provider) => (
+              <tbody
+                className="text-capitalize"
+                ref={provider.innerRef}
+                {...provider.droppableProps}
+              >
+                {task?.map((user, index) => (
+                  <Draggable
+                    key={user.name}
+                    draggableId={user.name}
+                    index={index}
+                  >
+                    {(provider) => (
+                      <tr {...provider.draggableProps} ref={provider.innerRef}>
+                        <td {...provider.dragHandleProps}> = </td>
+                        <td>{user.name}</td>
+                        <td>{user.age}</td>
+                        <td>{user.gender}</td>
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provider.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </table>
+      </DragDropContext>
+                               </div>
+                             </div>
+            </div>    
+        </div>
+      </React.Fragment>
+    </div>
+    </div>
+            </div>
+        </div>
+  );
+}
+
