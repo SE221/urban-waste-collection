@@ -28,6 +28,11 @@ exports.findAllCollectors = async (req, res) => {
   return res.send(allCollectors);
 };
 
+exports.findAllJanitors = async (req, res) => {
+  const allJanitors = await db.collection("Users").find({Role: Janitor}).toArray();
+  return res.send(allJanitors);
+};
+
 exports.findUser = async (req, res) => {
   const user = await db.collection("Users").findOne({ ID: req.params.id });
   return res.send(user);
@@ -131,7 +136,7 @@ exports.login = async (req, res) => {
   const accessToken = generateToken(user.ID);
 
   const refreshToken = jwt.sign(
-    { userId: user.ID },
+    { "userId": user.ID },
     process.env.REFRESH_TOKEN_KEY
   );
 

@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const db = dbo.getDb();
-let refreshTokens = [];
 
 exports.findAllMcps = async (req, res) => {
   const allMcps = await db.collection("MCP").find({}).toArray();
