@@ -8,15 +8,20 @@ import { COLUMNS } from "./ultis/columns";
 import { Table } from "../../../components/Table/Table.jsx";
 import axios from "axios";
 
-function Staff() {
+const Worker = () => {
   const [workers, setWorkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [workersPerPage, setWorkersPerPage] = useState(10);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(
         "https://randomuser.me/api?results=200&nat=us&inc=id,name,location,email,dob,phone"
       )
       .then((res) => {
+        setLoading(false);
         const objs = res.data.results;
         const data = objs.map((obj) => {
           return {
@@ -36,23 +41,38 @@ function Staff() {
       });
   }, []);
 
+  // get current workers
+  const indexOfLastWorker = currentPage * workersPerPage;
+  const indexOfFirstWorker = indexOfLastWorker - workersPerPage;
+  const currentWorkers = workers.slice(indexOfFirstWorker, indexOfLastWorker);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="tool">
       <Sidebar />
       <div className="toolContainer">
         <Navbar pageTitle="Workers" />
         <div className="content">
-          <div>
-            <Table
-              columns={COLUMNS}
-              data={workers}
-              placeholder={"Search worker here..."}
-            />
-          </div>
+          {!loading ? (
+            <div>
+              <Table
+                columns={COLUMNS}
+                data={currentWorkers}
+                placeholder={"Search worker here..."}
+                rowsPerPage={workersPerPage}
+                totalRows={workers.length}
+                paginate={paginate}
+                currentPage={currentPage}
+              />
+            </div>
+          ) : (
+            <h4>Loading...</h4>
+          )}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Staff;
+export default Worker;

@@ -17,11 +17,15 @@ for (let i = 1; i <= 5; ++i) {
   );
 }
 
-export const Table = (props) => {
-  const columns = props.columns;
-  const data = props.data;
-  const rowsPerPage = props.rowsPerPage;
-  const totalRows = props.totalRows;
+export const Table = ({
+  columns,
+  data,
+  rowsPerPage,
+  totalRows,
+  placeholder,
+  currentPage,
+  paginate,
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -40,13 +44,12 @@ export const Table = (props) => {
   );
 
   const { globalFilter } = state;
-  const propps = getTableProps();
   return (
     <div>
       <Filter
         filter={globalFilter}
         setFilter={setGlobalFilter}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
       />
       <table {...getTableProps()}>
         <thead>
@@ -86,7 +89,12 @@ export const Table = (props) => {
           })}
         </tbody>
       </table>
-      <TableFooter rowsPerPage={rowsPerPage} totalRows={totalRows} />
+      <TableFooter
+        rowsPerPage={rowsPerPage}
+        totalRows={totalRows}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 };

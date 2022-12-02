@@ -38,13 +38,13 @@ const Sidebar = () => {
               <span>Home</span>
             </li>
           </Link>
-          <Link to="/staff" style={{ textDecoration: "none" }}>
+          <Link to="/worker" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faUserGroup} className="side-icon" />
               <span>Workers</span>
             </li>
           </Link>
-          <Link to="/staff" style={{ textDecoration: "none" }}>
+          <Link to="/vehicles" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faTruckMoving} className="side-icon" />
               <span>Vehicles</span>

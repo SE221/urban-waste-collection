@@ -9,7 +9,7 @@ import { HomeCol } from "./pages/Collector/HomeCol";
 // import { Home } from './pages/home/Home';
 import Cookies from "./pages/Cookies/Cookies";
 import Tool from "./pages/Tool/Tool";
-import Staff from "./pages/BO/Staff/Staff";
+import Worker from "./pages/BO/Worker/Worker";
 import TaskCol from "./pages/Collector/TaskCol/MCPs";
 import TaskJan from "./pages/Janitor/TaskJan/TaskJan";
 import TA from "./pages/BO/TaskAssignment/TaskA";
@@ -32,7 +32,7 @@ function App() {
         <Route path="/homecol" element={<HomeCol />} />
         <Route path="/tool" element={<Tool />} />
         <Route path="/cookies" element={<Cookies />} />
-        <Route path="/staff" element={<Staff />} />
+        <Route path="/worker" element={<Worker />} />
         <Route path="/message" element={<ChatApp />} />
         <Route path="/taskJan" element={<TaskJan />} />
         <Route path="/taskCol" element={<TaskCol />} />

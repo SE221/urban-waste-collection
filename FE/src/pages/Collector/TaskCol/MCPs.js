@@ -13,7 +13,7 @@ function TaskCol() {
       <div className="toolContainer">
         <Navbar />
         <div className="content">
-          <PageTitle title="Staff List" />
+          <PageTitle title="Workers List" />
           <Calendar />
         </div>
       </div>
