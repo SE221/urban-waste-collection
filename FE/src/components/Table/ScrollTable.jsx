@@ -8,7 +8,7 @@ import "./Table.css";
 
 const Styles = styled.div`
   .table {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     .tr {
       :last-child {
         .td {
@@ -17,11 +17,15 @@ const Styles = styled.div`
       }
     }
 
+    .th {
+      font-weight: bold;
+    }
+
     .th,
     .td {
       padding: 5px;
       border-bottom: 1px solid #ddd;
-      border-right: 1px solid #ddd;
+      /* border-right: 1px solid #ddd; */
       background-color: #fff;
       overflow: hidden;
 
@@ -41,7 +45,7 @@ const Styles = styled.div`
 
       .header {
         top: 0;
-        box-shadow: 0px 3px 3px #ccc;
+        /* box-shadow: 0px 3px 3px #ccc; */
       }
 
       .footer {
@@ -85,35 +89,35 @@ export const ScrollTable = ({ columns, data }) => {
       <div
         {...getTableProps()}
         className="table sticky"
-        style={{ width: 500, height: 200 }}
+        style={{ width: 500, height: 240 }}
       >
-        <thead className="header">
+        <div className="header">
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="tr">
+            <div {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="th">
+                <div {...column.getHeaderProps()} className="th">
                   {column.render("Header")}
-                </th>
+                </div>
               ))}
-            </tr>
+            </div>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()} className="body">
+        </div>
+        <div {...getTableBodyProps()} className="body">
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="tr">
+              <div {...row.getRowProps()} className="tr">
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()} className="td">
+                    <div {...cell.getCellProps()} className="td">
                       {cell.render("Cell")}
-                    </td>
+                    </div>
                   );
                 })}
-              </tr>
+              </div>
             );
           })}
-        </tbody>
+        </div>
       </div>
     </Styles>
   );

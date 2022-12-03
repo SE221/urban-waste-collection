@@ -14,7 +14,7 @@ const Worker = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/workers")
+      .get("http://localhost:1337/api/working")
       .then((res) => {
         setLoading(false);
         const objs = res.data;
@@ -23,9 +23,6 @@ const Worker = () => {
             id: obj.ID,
             name: obj.Name,
             role: obj.Role,
-            dob: obj.DoB,
-            phone_number: obj["Phone Number"],
-            active: obj.isWorking ? "Yes" : "No",
           };
         });
         setWorkers(data);

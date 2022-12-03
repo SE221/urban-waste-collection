@@ -25,5 +25,9 @@
   flex-basis: 40%;
   /* width: 200px; */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.table-info {
+  margin-bottom: 20px;
 }

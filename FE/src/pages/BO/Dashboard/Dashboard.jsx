@@ -17,8 +17,12 @@ export const Dashboard = () => {
             <img src={map} alt="" className="map" />
           </div>
           <div className="table-content">
-            <div>
+            <div className="table-info">
               <h4>Active workers</h4>
+              <ActiveWorker />
+            </div>
+            <div className="table-info">
+              <h4>Overloaded MCPs</h4>
               <ActiveWorker />
             </div>
           </div>
