@@ -25,6 +25,7 @@ export const Table = ({
   placeholder,
   currentPage,
   paginate,
+  canSearch,
 }) => {
   const {
     getTableProps,
@@ -46,11 +47,14 @@ export const Table = ({
   const { globalFilter } = state;
   return (
     <div>
-      <Filter
-        filter={globalFilter}
-        setFilter={setGlobalFilter}
-        placeholder={placeholder}
-      />
+      {canSearch && (
+        <Filter
+          filter={globalFilter}
+          setFilter={setGlobalFilter}
+          placeholder={placeholder}
+        />
+      )}
+
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (

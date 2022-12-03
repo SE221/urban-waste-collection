@@ -4,21 +4,26 @@
 .dashboard-container {
   flex: 6;
 }
-.content {
+.dashboard-content {
   margin: 0px 40px;
   padding: 10px 0px;
   display: flex;
 }
 
 .map-content {
-  flex-basis: 33.333%;
+  flex-basis: 60%;
+  width: 600px;
 }
 
-/* .map {
-  width: 100px;
-  height: 100px;
-} */
+.map {
+  width: 95%;
+  height: 600px;
+  margin-right: 0;
+}
 
 .table-content {
-  flex-basis: 66.666%;
+  flex-basis: 40%;
+  /* width: 200px; */
+  display: flex;
+  justify-content: center;
 }

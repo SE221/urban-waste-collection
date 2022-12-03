@@ -1,11 +1,8 @@
 // import { React } from "react";
-import Sidebar from "../../../components/Sidebar/Sidebar";
-import Navbar from "../../../components/Navbar/Navbar";
-import "../../Tool/tool.css";
-
 import React, { useState, useEffect } from "react";
 import { COLUMNS } from "./utils/columns";
-import { Table } from "../../../components/Table/Table.jsx";
+import { ScrollTable } from "../../../../components/Table/ScrollTable";
+import "./activeWorker.css";
 import axios from "axios";
 
 const Worker = () => {
@@ -46,30 +43,23 @@ const Worker = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="tool">
-      <Sidebar />
-      <div className="toolContainer">
-        <Navbar pageTitle="Workers" />
-        <div className="content">
-          {!loading ? (
-            <div>
-              <Table
-                columns={COLUMNS}
-                data={currentWorkers}
-                placeholder={"Search worker here..."}
-                rowsPerPage={workersPerPage}
-                totalRows={workers.length}
-                paginate={paginate}
-                currentPage={currentPage}
-                canSearch={true}
-              />
-            </div>
-          ) : (
-            <h4>Loading...</h4>
-          )}
+    <>
+      {!loading ? (
+        <div className="active-worker">
+          <ScrollTable
+            columns={COLUMNS}
+            data={workers}
+            placeholder={"Search worker here..."}
+            rowsPerPage={workersPerPage}
+            totalRows={workers.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
-      </div>
-    </div>
+      ) : (
+        <h4>Loading...</h4>
+      )}
+    </>
   );
 };
 
