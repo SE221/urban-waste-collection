@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useTable, useBlockLayout } from "react-table";
 import { useSticky } from "react-table-sticky";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import "./Table.css";
 
 const Styles = styled.div`

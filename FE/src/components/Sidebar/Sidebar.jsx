@@ -53,7 +53,7 @@ const Sidebar = (props) => {
           <Link to="/mcps" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faTrashCan} className="side-icon" />
-              <span>MCP</span>
+              <span>MCPs</span>
             </li>
           </Link>
           <Link to="/task-assignment" style={{ textDecoration: "none" }}>

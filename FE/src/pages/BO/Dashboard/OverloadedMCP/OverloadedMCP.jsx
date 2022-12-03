@@ -3,25 +3,26 @@ import { COLUMNS } from "./utils/columns";
 import { ScrollTable } from "../../../../components/Table/ScrollTable";
 import axios from "axios";
 
-const ActiveWorker = () => {
-  const [workers, setWorkers] = useState([]);
+const OverloadedMCP = () => {
+  const [overloadedMCPs, setOverloadedMCPs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/working")
+      .get("http://localhost:1337/api/overloaded-mcps")
       .then((res) => {
+        console.log({ res });
         setLoading(false);
         const objs = res.data;
         const data = objs.map((obj) => {
           return {
-            id: obj.ID,
-            name: obj.Name,
-            role: obj.Role,
+            id: obj.MCP_ID,
+            dist: obj.Dist,
+            time: obj["TotalOverloaded Time"],
           };
         });
-        setWorkers(data);
+        setOverloadedMCPs(data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,7 +32,7 @@ const ActiveWorker = () => {
   return (
     <div>
       {!loading ? (
-        <ScrollTable columns={COLUMNS} data={workers} />
+        <ScrollTable columns={COLUMNS} data={overloadedMCPs} />
       ) : (
         <h4>Loading...</h4>
       )}
@@ -39,4 +40,4 @@ const ActiveWorker = () => {
   );
 };
 
-export default ActiveWorker;
+export default OverloadedMCP;

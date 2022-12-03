@@ -4,6 +4,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import "../Dashboard/dashboard.css";
 import map from "../../../assets/images/map.jpg";
 import ActiveWorker from "./ActiveWorker/ActiveWorker";
+import OverloadedMCP from "./OverloadedMCP/OverloadedMCP";
 
 export const Dashboard = () => {
   const isDashboard = true;
@@ -23,7 +24,7 @@ export const Dashboard = () => {
             </div>
             <div className="table-info">
               <h4>Overloaded MCPs</h4>
-              <ActiveWorker />
+              <OverloadedMCP />
             </div>
           </div>
         </div>
