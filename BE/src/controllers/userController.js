@@ -71,15 +71,15 @@ exports.createTest = async (req, res) => {
   bo1.Password = await bcrypt.hash(bo1.Password, 10);
   bo2.Password = await bcrypt.hash(bo2.Password, 10);
 
-  const check1 = await db.collection("Users").findOne({ ID: "B0001" });
-  const check2 = await db.collection("Users").findOne({ ID: "B0002" });
+  const check1 = await db.collection("BOs").findOne({ ID: "B0001" });
+  const check2 = await db.collection("BOs").findOne({ ID: "B0002" });
 
   if (check1 || check2) {
     res.status(500).send("BOs already exists.");
     return;
   }
 
-  await db.collection("Users").insertMany([bo1, bo2]);
+  await db.collection("BOs").insertMany([bo1, bo2]);
 
   res.send({ bo1, bo2 });
 };
@@ -98,7 +98,7 @@ exports.register = async (req, res) => {
     return res.status(401).send("The password confirmation does not match");
   }
 
-  const user = await db.collection("Users").findOne({ "Email Address": email });
+  const user = await db.collection("BOs").findOne({ "Email Address": email });
 
   if (user) {
     return res.status(409).send("Email address already exists");
@@ -107,7 +107,7 @@ exports.register = async (req, res) => {
   // generate ID
   const ran = Math.floor(Math.random() * 9000 + 1000);
   const id = `B${ran}`;
-  const checkId = await db.collection("Users").findOne({ ID: id });
+  const checkId = await db.collection("BOs").findOne({ ID: id });
 
   if (checkId) {
     return res.status(500).send("ID already exists");
@@ -120,7 +120,7 @@ exports.register = async (req, res) => {
     Role: "BO",
   };
 
-  await db.collection("Users").insertOne(newUser);
+  await db.collection("BOs").insertOne(newUser);
 
   return res.send("Successfully register new BO account");
 };
@@ -134,7 +134,7 @@ exports.login = async (req, res) => {
     return res.status(401).send("Missing email address or password");
   }
 
-  const user = await db.collection("Users").findOne({ "Email Address": email });
+  const user = await db.collection("BOs").findOne({ "Email Address": email });
   
   if (!user) {
     return res.status(404).send("Email address not found");
@@ -146,10 +146,10 @@ exports.login = async (req, res) => {
     return res.status(401).send("Invalid email address or password");
   }
 
-  const accessToken = generateToken(user.ID);
+  const accessToken = generateToken({userID: user.ID, Role: "BO"});
 
   const refreshToken = jwt.sign(
-    { userId: user.ID },
+    { userId: user.ID, Role: "BO" },
     process.env.REFRESH_TOKEN_KEY
   );
 
@@ -190,7 +190,7 @@ exports.generateAccessToken = async (req, res) => {
     tokenUser = user;
   });
 
-  const accessToken = generateToken(tokenUser.userId);
+  const accessToken = generateToken({userID: tokenUser.userId, Role: "BO"});
   console.log("new accessToken: ", accessToken);
 
   return res.send({ accessToken });

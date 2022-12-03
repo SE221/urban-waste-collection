@@ -14,6 +14,9 @@ module.exports = {
       if (err) {
         return res.status(403).send("No permission");
       }
+      if (user.Role != "BO") {
+        return res.status(403).send("No permission");
+      }
       req.user = user;
       next();
     });
