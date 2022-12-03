@@ -12,7 +12,6 @@ const generateToken = (userId) => {
   });
 };
 
-
 exports.findAllWorkers = async (req, res) => {
   const allWorkers = await db.collection("Users").find({}).toArray();
   return res.send(allWorkers);
@@ -125,7 +124,7 @@ exports.login = async (req, res) => {
   }
 
   const user = await db.collection("Users").findOne({ "Email Address": email });
-
+  
   if (!user) {
     return res.status(404).send("Email address not found");
   }
