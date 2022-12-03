@@ -1,4 +1,4 @@
-import "./TaskA.css";
+import "./taskAssignment.css";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,13 +7,12 @@ import tasks from "./tempData.json";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import "../../Tool/tool.css";
-import PageTitle from "../../../components/PageTitle/PageTitle";
 
 // import BootstrapTable from 'react-bootstrap-table-next';
 // import cellEditFactory,{Type} from 'react-bootstrap-table2-editor'
 ////////////////////////////////////////////////
 
-export default function TA() {
+const TaskAssignment = () => {
   const [users, setUsers] = useState(userdata.data);
   const handleDragEnd = (e) => {
     if (!e.destination) return;
@@ -39,10 +38,8 @@ export default function TA() {
     <div className="tool">
       <Sidebar />
       <div className="toolContainer">
-        <Navbar />
+        <Navbar pageTitle="Task Assignment" />
         <div className="content">
-          <PageTitle title="Assign Task" />
-
           <div className="TA mt-4">
             <React.Fragment>
               <ul class="nav nav-pills mb-3 mt-1" id="pills-tab" role="tablist">
@@ -174,4 +171,6 @@ export default function TA() {
       </div>
     </div>
   );
-}
+};
+
+export default TaskAssignment;

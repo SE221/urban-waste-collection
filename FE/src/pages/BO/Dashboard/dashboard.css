@@ -1,0 +1,24 @@
+.dashboard {
+  display: flex;
+}
+.dashboard-container {
+  flex: 6;
+}
+.content {
+  margin: 0px 40px;
+  padding: 10px 0px;
+  display: flex;
+}
+
+.map-content {
+  flex-basis: 33.333%;
+}
+
+/* .map {
+  width: 100px;
+  height: 100px;
+} */
+
+.table-content {
+  flex-basis: 66.666%;
+}

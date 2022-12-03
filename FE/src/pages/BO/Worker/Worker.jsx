@@ -17,21 +17,20 @@ const Worker = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        "https://randomuser.me/api?results=200&nat=us&inc=id,name,location,email,dob,phone"
-      )
+      .get("http://localhost:1337/api/workers")
       .then((res) => {
+        console.log({ res });
         setLoading(false);
-        const objs = res.data.results;
+        const objs = res.data;
         const data = objs.map((obj) => {
+          console.log(obj.DoB);
           return {
-            id: obj.id.value,
-            first_name: obj.name.first,
-            last_name: obj.name.last,
-            city: obj.location.city,
-            age: obj.dob.age,
-            role: obj.role,
-            phone: obj.phone,
+            id: obj.ID,
+            name: obj.Name,
+            role: obj.Role,
+            dob: obj.DoB,
+            phone_number: obj["Phone Number"],
+            active: obj.isWorking ? "Yes" : "No",
           };
         });
         setWorkers(data);
