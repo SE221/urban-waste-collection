@@ -12,14 +12,9 @@ const generateToken = (userId) => {
   });
 };
 
-exports.findAllUsers = async (req, res) => {
-  const allUsers = await db.collection("Users").find({}).toArray();
-  return res.send(allUsers);
-};
 
 exports.findAllWorkers = async (req, res) => {
-  const allUsers = await db.collection("Users").find({}).toArray();
-  const allWorkers = allUsers.filter((user) => user.Role !== "BO");
+  const allWorkers = await db.collection("Users").find({}).toArray();
   return res.send(allWorkers);
 };
 
@@ -33,8 +28,16 @@ exports.findAllJanitors = async (req, res) => {
   return res.send(allJanitors);
 };
 
+exports.findAllWorking = async (req, res) => {
+  const allWorking = await db.collection("Users").find({isWorking: true}).toArray();
+  return res.send(allWorking);
+};
+
 exports.findUser = async (req, res) => {
-  const user = await db.collection("Users").findOne({ ID: req.params.id });
+  var user = await db.collection("Users").findOne({ ID: req.params.id });
+  if (!user){
+    user = await db.collection("BOs").findOne({ ID: req.params.id });
+  }
   return res.send(user);
 };
 
