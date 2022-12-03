@@ -24,12 +24,18 @@ exports.findAllWorkers = async (req, res) => {
 };
 
 exports.findAllCollectors = async (req, res) => {
-  const allCollectors = await db.collection("Users").find({Role: Collector}).toArray();
+  const allCollectors = await db
+    .collection("Users")
+    .find({ Role: Collector })
+    .toArray();
   return res.send(allCollectors);
 };
 
 exports.findAllJanitors = async (req, res) => {
-  const allJanitors = await db.collection("Users").find({Role: Janitor}).toArray();
+  const allJanitors = await db
+    .collection("Users")
+    .find({ Role: Janitor })
+    .toArray();
   return res.send(allJanitors);
 };
 
@@ -79,10 +85,15 @@ exports.createTest = async (req, res) => {
 exports.register = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
 
   // should handle in frontend
-  if (!email || !password) {
+  if (!email || !password || !confirmPassword) {
     return res.status(401).send("Missing email address or password");
+  }
+
+  if (password !== confirmPassword) {
+    return res.status(401).send("The password confirmation does not match");
   }
 
   const user = await db.collection("Users").findOne({ "Email Address": email });
@@ -136,7 +147,7 @@ exports.login = async (req, res) => {
   const accessToken = generateToken(user.ID);
 
   const refreshToken = jwt.sign(
-    { "userId": user.ID },
+    { userId: user.ID },
     process.env.REFRESH_TOKEN_KEY
   );
 
