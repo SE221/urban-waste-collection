@@ -5,7 +5,7 @@ const { auth } = require("../helper/auth");
 const router = express.Router();
 
 // get all workers
-router.get("/workers", auth, userController.findAllWorkers);
+router.get("/workers", userController.findAllWorkers);
 
 // get all working workers
 router.get("/working", auth, userController.findAllWorking);

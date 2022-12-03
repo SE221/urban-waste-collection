@@ -1,7 +1,5 @@
-const bcrypt = require("bcrypt");
 const dbo = require("../db/config");
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+
 
 const db = dbo.getDb();
 
