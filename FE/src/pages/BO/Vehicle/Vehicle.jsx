@@ -8,40 +8,43 @@ import { COLUMNS } from "./utils/columns";
 import { Table } from "../../../components/Table/Table.jsx";
 import axios from "axios";
 
-const Worker = () => {
-  const [workers, setWorkers] = useState([]);
+const Vehicle = () => {
+  const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [workersPerPage, setWorkersPerPage] = useState(10);
+  const [vehiclesPerPage, setVehiclesPerPage] = useState(10);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/workers")
+      .get("http://localhost:1337/api/vehicles")
       .then((res) => {
         setLoading(false);
         const objs = res.data;
         const data = objs.map((obj) => {
           return {
-            id: obj.ID,
-            name: obj.Name,
-            role: obj.Role,
-            dob: obj.DoB,
-            phone_number: obj["Phone Number"],
-            active: obj.isWorking ? "Yes" : "No",
+            id: obj.Vehicle_ID,
+            license: obj["License Plate"],
+            brand: obj.Brand,
+            capacity: obj["Capacity (m3)"],
+            fuel: obj["Fuel Tank"],
+            weight: obj["Total Weight"],
           };
         });
-        setWorkers(data);
+        setVehicles(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // get current workers
-  const indexOfLastWorker = currentPage * workersPerPage;
-  const indexOfFirstWorker = indexOfLastWorker - workersPerPage;
-  const currentWorkers = workers.slice(indexOfFirstWorker, indexOfLastWorker);
+  // get current vehicles
+  const indexOfLastVehicle = currentPage * vehiclesPerPage;
+  const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
+  const currentVehicles = vehicles.slice(
+    indexOfFirstVehicle,
+    indexOfLastVehicle
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -49,16 +52,16 @@ const Worker = () => {
     <div className="tool">
       <Sidebar />
       <div className="toolContainer">
-        <Navbar pageTitle="Workers" />
+        <Navbar pageTitle="Vehicles" />
         <div className="content">
           {!loading ? (
             <div>
               <Table
                 columns={COLUMNS}
-                data={currentWorkers}
-                placeholder={"Search worker here..."}
-                rowsPerPage={workersPerPage}
-                totalRows={workers.length}
+                data={currentVehicles}
+                placeholder={"Search vehicle here..."}
+                rowsPerPage={vehiclesPerPage}
+                totalRows={vehicles.length}
                 paginate={paginate}
                 currentPage={currentPage}
                 canSearch={true}
@@ -73,4 +76,4 @@ const Worker = () => {
   );
 };
 
-export default Worker;
+export default Vehicle;

@@ -4,23 +4,23 @@ export const COLUMNS = [
     accessor: "id",
   },
   {
-    Header: "Name",
-    accessor: "name",
+    Header: "License Plate",
+    accessor: "license",
   },
   {
-    Header: "Role",
-    accessor: "role",
+    Header: "Brand",
+    accessor: "brand",
   },
   {
-    Header: "DoB",
-    accessor: "dob",
+    Header: "Capacity (m3)",
+    accessor: "capacity",
   },
   {
-    Header: "Phone Number",
-    accessor: "phone_number",
+    Header: "Fuel Tank (litre)",
+    accessor: "fuel",
   },
   {
-    Header: "Active",
-    accessor: "active",
+    Header: "Total weight (kg)",
+    accessor: "weight",
   },
 ];

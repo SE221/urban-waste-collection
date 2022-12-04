@@ -2,7 +2,7 @@ import { React } from "react";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import "../Dashboard/dashboard.css";
-import map from "../../../assets/images/map.jpg";
+import Map from "./Map/Map";
 import ActiveWorker from "./ActiveWorker/ActiveWorker";
 import OverloadedMCP from "./OverloadedMCP/OverloadedMCP";
 
@@ -15,7 +15,7 @@ export const Dashboard = () => {
         <Navbar pageTitle="Dashboard" />
         <div className="dashboard-content">
           <div className="map-content">
-            <img src={map} alt="" className="map" />
+            <Map />
           </div>
           <div className="table-content">
             <div className="table-info">

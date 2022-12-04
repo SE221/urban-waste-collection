@@ -12,7 +12,6 @@ const OverloadedMCP = () => {
     axios
       .get("http://localhost:1337/api/overloaded-mcps")
       .then((res) => {
-        console.log({ res });
         setLoading(false);
         const objs = res.data;
         const data = objs.map((obj) => {
