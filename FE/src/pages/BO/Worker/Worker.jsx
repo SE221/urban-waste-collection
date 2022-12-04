@@ -17,7 +17,7 @@ const Worker = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/workers")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/workers`)
       .then((res) => {
         setLoading(false);
         const objs = res.data;

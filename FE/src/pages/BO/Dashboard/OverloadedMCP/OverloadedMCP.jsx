@@ -10,7 +10,7 @@ const OverloadedMCP = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/overloaded-mcps")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/overloaded-mcps`)
       .then((res) => {
         setLoading(false);
         const objs = res.data;
@@ -18,7 +18,7 @@ const OverloadedMCP = () => {
           return {
             id: obj.MCP_ID,
             dist: obj.Dist,
-            time: obj["TotalOverloaded Time"],
+            time: obj["Overloaded Time"],
           };
         });
         setOverloadedMCPs(data);

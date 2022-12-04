@@ -17,7 +17,7 @@ const MCP = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/mcps")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`)
       .then((res) => {
         setLoading(false);
         const objs = res.data;

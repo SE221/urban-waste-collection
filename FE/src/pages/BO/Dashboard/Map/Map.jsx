@@ -8,8 +8,7 @@ const geojson = {
   features: [],
 };
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiaGFpYnVpLWhjbXV0IiwiYSI6ImNsYjh0cDhrNTBvaHQzdm1yODdsOGc1NzMifQ.-L9ltwmYO7M5dvIYfZvvXQ";
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const Map = () => {
   const mapContainer = useRef(null);
@@ -29,7 +28,7 @@ const Map = () => {
 
     // get mcps data
     axios
-      .get("http://localhost:1337/api/mcps")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`)
       .then((res) => {
         const objs = res.data;
         objs.map((obj) => {

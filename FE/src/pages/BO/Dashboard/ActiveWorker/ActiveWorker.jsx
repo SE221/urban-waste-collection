@@ -10,7 +10,7 @@ const ActiveWorker = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/working")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/working`)
       .then((res) => {
         setLoading(false);
         const objs = res.data;

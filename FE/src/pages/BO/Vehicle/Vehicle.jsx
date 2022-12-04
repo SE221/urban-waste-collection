@@ -17,7 +17,7 @@ const Vehicle = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:1337/api/vehicles")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/vehicles`)
       .then((res) => {
         setLoading(false);
         const objs = res.data;
