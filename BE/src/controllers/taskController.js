@@ -16,6 +16,16 @@ exports.findCollectorTask = async (req, res) => {
   if (!CTasks)
     return res.status(404).send("Task not found");
   CTasks[0].listOfMcps = CTasks[0].listOfMcps.split(", ").map(Number)
+  let coordinateList =[]
+  for (const mcp of CTasks[0].listOfMcps)
+  {
+    let newCoordinate = await db.collection("MCP").find({Number: mcp}).project({_id: 0,Lat:1, Lng:1}).toArray()
+    newCoordinate[0].Lat = parseFloat(newCoordinate[0].Lat.toString())
+    newCoordinate[0].Lng = parseFloat(newCoordinate[0].Lng.toString())
+    coordinateList.push(newCoordinate);
+  }
+
+  CTasks[0]["Coordinate List"] = coordinateList
   return res.send(CTasks);
 };
 
