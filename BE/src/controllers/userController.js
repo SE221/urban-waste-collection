@@ -94,17 +94,21 @@ exports.register = async (req, res) => {
 
   // should handle in frontend
   if (!email || !password || !confirmPassword) {
-    return res.status(401).send("Missing email address or password");
+    return res
+      .status(401)
+      .send({ message: "Missing email address or password" });
   }
 
   if (password !== confirmPassword) {
-    return res.status(401).send("The password confirmation does not match");
+    return res
+      .status(401)
+      .send({ message: "The password confirmation does not match" });
   }
 
   const user = await db.collection("BOs").findOne({ "Email Address": email });
 
   if (user) {
-    return res.status(409).send("Email address already exists");
+    return res.status(409).send({ message: "Email address already exists" });
   }
 
   // generate ID
@@ -113,7 +117,7 @@ exports.register = async (req, res) => {
   const checkId = await db.collection("BOs").findOne({ ID: id });
 
   if (checkId) {
-    return res.status(500).send("ID already exists");
+    return res.status(500).send({ message: "ID already exists" });
   }
 
   const newUser = {
@@ -125,7 +129,7 @@ exports.register = async (req, res) => {
 
   await db.collection("BOs").insertOne(newUser);
 
-  return res.send("Successfully register new BO account");
+  return res.send({ message: "Successfully register new BO account" });
 };
 
 exports.login = async (req, res) => {
@@ -156,7 +160,7 @@ exports.login = async (req, res) => {
   const accessToken = generateToken({ userID: user.ID, Role: "BO" });
 
   const refreshToken = jwt.sign(
-    { userId: user.ID, Role: "BO" },
+    { userID: user.ID, Role: "BO" },
     process.env.REFRESH_TOKEN_KEY
   );
 
@@ -172,25 +176,25 @@ exports.logout = async (req, res) => {
   );
   console.log("refreshTokens array after filtering: ", refreshTokens);
 
-  return res.status(204).send("Logout successfully");
+  return res.status(204).send({ message: "Logout successfully" });
 };
 
 exports.generateAccessToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
 
   if (!refreshToken) {
-    return res.status(401).send("Missing token");
+    return res.status(401).send({ message: "Missing token" });
   }
 
   if (!refreshTokens.includes(refreshToken)) {
-    return res.status(403).send("No permission");
+    return res.status(403).send({ message: "No permission" });
   }
 
   let tokenUser;
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
     if (err) {
-      return res.status(403).send("No permission");
+      return res.status(403).send({ message: "No permission" });
     }
     console.log(user);
 
