@@ -4,11 +4,11 @@ const { auth } = require("../helper/auth");
 
 const router = express.Router();
 
-// get all users (!!! including BO !!!)
-router.get("/users", auth, userController.findAllUsers);
-
 // get all workers
 router.get("/workers", auth, userController.findAllWorkers);
+
+// get all working workers
+router.get("/working", auth, userController.findAllWorking);
 
 // get one user by id
 router.get("/user/:id", auth, userController.findUser);
@@ -26,6 +26,6 @@ router.post("/login", userController.login);
 router.delete("/logout", userController.logout);
 
 // generate access token
-router.post("/generate-access-token", userController. generateAccessToken);
+router.post("/generate-access-token", userController.generateAccessToken);
 
 module.exports = router;

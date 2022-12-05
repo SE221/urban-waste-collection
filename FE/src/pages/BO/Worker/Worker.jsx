@@ -1,43 +1,55 @@
-// import { React } from "react";
-import Sidebar from "../../../components/Sidebar/Sidebar";
-import Navbar from "../../../components/Navbar/Navbar";
-import "../../Tool/tool.css";
-
 import React, { useState, useEffect } from "react";
-import { COLUMNS } from "./ultis/columns";
+import { useNavigate } from "react-router-dom";
+import { COLUMNS } from "./utils/columns";
 import { Table } from "../../../components/Table/Table.jsx";
 import axios from "axios";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import Navbar from "../../../components/Navbar/Navbar";
+import AuthService from "../../authen/AuthService";
+import "../../Tool/tool.css";
 
 const Worker = () => {
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [workersPerPage, setWorkersPerPage] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // authenticate current user on fe
+    const currentUser = AuthService.getCurrentUser();
+
+    if (!currentUser) {
+      return navigate("/403");
+    }
+    const config = {
+      headers: {
+        Authorization: "Bearer " + currentUser.access_token,
+      },
+    };
     setLoading(true);
     axios
-      .get(
-        "https://randomuser.me/api?results=200&nat=us&inc=id,name,location,email,dob,phone"
-      )
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/workers`, config)
       .then((res) => {
         setLoading(false);
-        const objs = res.data.results;
+        const objs = res.data;
         const data = objs.map((obj) => {
           return {
-            id: obj.id.value,
-            first_name: obj.name.first,
-            last_name: obj.name.last,
-            city: obj.location.city,
-            age: obj.dob.age,
-            role: obj.role,
-            phone: obj.phone,
+            id: obj.ID,
+            name: obj.Name,
+            role: obj.Role,
+            dob: obj.DoB,
+            phone_number: obj["Phone Number"],
+            active: obj.isWorking ? "Yes" : "No",
           };
         });
         setWorkers(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.message);
+        if (err.response.status == 403) {
+          return navigate("/403");
+        }
       });
   }, []);
 
@@ -64,6 +76,7 @@ const Worker = () => {
                 totalRows={workers.length}
                 paginate={paginate}
                 currentPage={currentPage}
+                canSearch={true}
               />
             </div>
           ) : (

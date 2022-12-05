@@ -3,7 +3,7 @@ import SidebarJan from "../../../components/Sidebar/Sidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import "../../Tool/Tool";
 import React, { useState, useEffect } from "react";
-import { COLUMNS } from "./ultis/columns";
+import { COLUMNS } from "./utils/columns";
 import { Table } from "../../../components/Table/Table";
 import axios from "axios";
 function ChatApp() {

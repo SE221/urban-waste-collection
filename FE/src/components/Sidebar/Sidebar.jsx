@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/UWC.png";
 import "./sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <div className="sidebar">
       <div className="top">
@@ -38,7 +38,7 @@ const Sidebar = () => {
               <span>Home</span>
             </li>
           </Link>
-          <Link to="/worker" style={{ textDecoration: "none" }}>
+          <Link to="/workers" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faUserGroup} className="side-icon" />
               <span>Workers</span>
@@ -50,13 +50,13 @@ const Sidebar = () => {
               <span>Vehicles</span>
             </li>
           </Link>
-          <Link to="/rp" style={{ textDecoration: "none" }}>
+          <Link to="/mcps" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faTrashCan} className="side-icon" />
-              <span>MCP</span>
+              <span>MCPs</span>
             </li>
           </Link>
-          <Link to="/taskA" style={{ textDecoration: "none" }}>
+          <Link to="/task-assignment" style={{ textDecoration: "none" }}>
             <li className="tab">
               <FontAwesomeIcon icon={faCircleArrowDown} className="side-icon" />
               <span>Task Assignment</span>
@@ -65,41 +65,45 @@ const Sidebar = () => {
         </ul>
       </div>
       <hr />
-
-      <div className="icon-list">
-        <h5 className="side-title">Statistics</h5>
-        <ul>
-          <li className="stats-tab">
-            <FontAwesomeIcon
-              icon={faCircleCheck}
-              className="side-icon bottom-icon"
-            />
-            <span>Active</span>
-            <span className="stats">160</span>
-          </li>
-          <li className="stats-tab">
-            <FontAwesomeIcon icon={faClock} className="side-icon bottom-icon" />
-            <span>Working</span>
-            <span className="stats">100</span>
-          </li>
-          <li className="stats-tab">
-            <FontAwesomeIcon
-              icon={faUserCheck}
-              className="side-icon bottom-icon"
-            />
-            <span>Vehicles</span>
-            <span className="stats">50</span>
-          </li>
-          <li className="stats-tab">
-            <FontAwesomeIcon
-              icon={faSquareXmark}
-              className="side-icon bottom-icon"
-            />
-            <span>Inactive</span>
-            <span className="stats">2000</span>
-          </li>
-        </ul>
-      </div>
+      {props.isDashboard && (
+        <div className="icon-list">
+          <h5 className="side-title">Statistics</h5>
+          <ul>
+            <li className="stats-tab">
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                className="side-icon bottom-icon"
+              />
+              <span>Active</span>
+              <span className="stats">160</span>
+            </li>
+            <li className="stats-tab">
+              <FontAwesomeIcon
+                icon={faClock}
+                className="side-icon bottom-icon"
+              />
+              <span>Working</span>
+              <span className="stats">100</span>
+            </li>
+            <li className="stats-tab">
+              <FontAwesomeIcon
+                icon={faUserCheck}
+                className="side-icon bottom-icon"
+              />
+              <span>Finished</span>
+              <span className="stats">60</span>
+            </li>
+            <li className="stats-tab">
+              <FontAwesomeIcon
+                icon={faSquareXmark}
+                className="side-icon bottom-icon"
+              />
+              <span>Inactive</span>
+              <span className="stats">2000</span>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

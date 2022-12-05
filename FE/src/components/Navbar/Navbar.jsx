@@ -6,6 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import PageTitle from "../PageTitle/PageTitle";
+import AuthService from "../../pages/authen/AuthService";
+
+const logoutHandler = () => {
+  AuthService.logout();
+};
 
 const Navbar = (props) => {
   return (
@@ -20,8 +25,10 @@ const Navbar = (props) => {
           <Dropdown>
             <Dropdown.Toggle className="avatar"></Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="./account">My Account</Dropdown.Item>
-              <Dropdown.Item href="./login">Log Out</Dropdown.Item>
+              <Dropdown.Item href="/account">My Account</Dropdown.Item>
+              <Dropdown.Item href="/signin" onClick={logoutHandler}>
+                Log Out
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
