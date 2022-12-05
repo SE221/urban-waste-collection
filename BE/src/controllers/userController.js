@@ -6,8 +6,8 @@ require("dotenv").config();
 const db = dbo.getDb();
 let refreshTokens = [];
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_KEY, {
+const generateToken = (user) => {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_KEY, {
     expiresIn: 60 * 60,
   });
 };
