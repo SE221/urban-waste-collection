@@ -14,6 +14,6 @@ exports.findAllVehicles = async (req, res) => {
 
 exports.findVehicle = async (req, res) => {
   const vehicle = await db.collection("Vehicles").findOne({ ID: req.params.id });
-  return res.send(user);
+  return res.send(vehicle);
 };
 
