@@ -13,6 +13,7 @@ exports.findAllJanitorTasks = async (req, res) => {
 
 exports.findCollectorTask = async (req, res) => {
   const CTasks = await db.collection("CTasks").find({id: req.params.id}).toArray();
+  
   if (!CTasks)
     return res.status(404).send("Task not found");
   CTasks[0].listOfMcps = CTasks[0].listOfMcps.split(", ").map(Number)
@@ -41,9 +42,10 @@ exports.createCTask = async(req,res) =>{
   const id = `T${ran}`;
   const range = req.body.range;
   const collectorID = req.body.id;
+  const collectorName = req.body.name;
   const listOfMcps = req.body.listOfMcps;
 
-  const newTask = {"id": id, "Range": range, "CollectorID": collectorID, "listOfMcps": listOfMcps};
+  const newTask = {"id": id, "Range": range, "CollectorID": collectorID, "CollectorName":collectorName, "listOfMcps": listOfMcps};
   await db.collection("CTasks").insertOne(newTask);
 
   res.send("Update Task Successfully!");
