@@ -4,7 +4,9 @@ import Signin from "./pages/authen/Signin";
 import Signup from "./pages/authen/Signup";
 import { Dashboard } from "./pages/BO/Dashboard/Dashboard";
 import Worker from "./pages/BO/Worker/Worker";
+import MCPAssignment from "./pages/BO/TaskAssignment/MCPAssignment";
 import TaskAssignment from "./pages/BO/TaskAssignment/TaskAssignment";
+import VehicleAssignment from "./pages/BO/TaskAssignment/VehicleAssignment";
 import Contact from "./pages/Contact/Contact";
 import ChatApp from "./pages/BO/Message/chatpage";
 import MCP from "./pages/BO/MCP/MCP";
@@ -25,7 +27,18 @@ function App() {
         <Route path="/workers" element={<Worker />} />
         <Route path="/vehicles" element={<Vehicle />} />
         <Route path="/mcps" element={<MCP />} />
-        <Route path="/task-assignment" element={<TaskAssignment />} />
+        <Route
+          path="/task-assignment/mcp-assignment"
+          element={<MCPAssignment />}
+        />
+        <Route
+          path="/task-assignment/route-planning"
+          element={<TaskAssignment />}
+        />
+        <Route
+          path="/task-assignment/vehicle-assignment"
+          element={<VehicleAssignment />}
+        />
         <Route path="/message" element={<ChatApp />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/403" element={<NoPermission />} />

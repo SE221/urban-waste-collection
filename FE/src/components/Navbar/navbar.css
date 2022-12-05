@@ -48,10 +48,6 @@
   cursor: pointer;
 }
 
-.nav-icon:hover {
-  color: aqua;
-}
-
 .dropdown-toggle::after {
   content: none;
 }

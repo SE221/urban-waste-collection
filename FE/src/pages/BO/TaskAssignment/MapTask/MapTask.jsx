@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import axios from "axios";
-import "./marker.css";
+import "../../Dashboard/Map/marker.css";
 import AuthService from "../../../authen/AuthService";
 
 const geojson = {
@@ -12,7 +12,7 @@ const geojson = {
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = () => {
+const MapTask = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(106.680879);
@@ -55,10 +55,7 @@ const Map = () => {
             },
             properties: {
               title: obj.Name,
-              description:
-                obj.Status === "OK"
-                  ? obj.Status
-                  : `${obj.Status} (${obj["Overloaded Time"]})`,
+              description: `Capacity: ${obj["Capacity (L)"]} (L)`,
             },
             status: obj.Status,
           };
@@ -68,16 +65,9 @@ const Map = () => {
         //add markers to map
         geojson.features.map((feature) => {
           const el = document.createElement("div");
-          let htmlString;
-          if (feature.status === "OK") {
-            htmlString = `<h3>${feature.properties.title}</h3><p class="ok-description">${feature.properties.description}</p>`;
-            el.className = "ok marker";
-          } else if (feature.status === "Overloaded") {
-            htmlString = `<h3>${feature.properties.title}</h3><p class="overloaded-description">${feature.properties.description}</p>`;
-            el.className = "overloaded marker";
-          }
+          let htmlString = `<h3>${feature.properties.title}</h3><p class="ok-description">${feature.properties.description}</p>`;
+          el.className = "ok marker";
 
-          // make a marker for each feature and add it to the map
           new mapboxgl.Marker(el)
             .setLngLat(feature.geometry.coordinates)
             .setPopup(
@@ -98,4 +88,4 @@ const Map = () => {
   return <div className="map" ref={mapContainer}></div>;
 };
 
-export default Map;
+export default MapTask;
