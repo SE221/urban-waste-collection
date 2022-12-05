@@ -34,13 +34,16 @@ exports.findAllJanitors = async (req, res) => {
 };
 
 exports.findAllWorking = async (req, res) => {
-  const allWorking = await db.collection("Users").find({isWorking: true}).toArray();
+  const allWorking = await db
+    .collection("Users")
+    .find({ isWorking: true })
+    .toArray();
   return res.send(allWorking);
 };
 
 exports.findUser = async (req, res) => {
   var user = await db.collection("Users").findOne({ ID: req.params.id });
-  if (!user){
+  if (!user) {
     user = await db.collection("BOs").findOne({ ID: req.params.id });
   }
   return res.send(user);
@@ -91,17 +94,21 @@ exports.register = async (req, res) => {
 
   // should handle in frontend
   if (!email || !password || !confirmPassword) {
-    return res.status(401).send("Missing email address or password");
+    return res
+      .status(401)
+      .send({ message: "Missing email address or password" });
   }
 
   if (password !== confirmPassword) {
-    return res.status(401).send("The password confirmation does not match");
+    return res
+      .status(401)
+      .send({ message: "The password confirmation does not match" });
   }
 
   const user = await db.collection("BOs").findOne({ "Email Address": email });
 
   if (user) {
-    return res.status(409).send("Email address already exists");
+    return res.status(409).send({ message: "Email address already exists" });
   }
 
   // generate ID
@@ -110,7 +117,7 @@ exports.register = async (req, res) => {
   const checkId = await db.collection("BOs").findOne({ ID: id });
 
   if (checkId) {
-    return res.status(500).send("ID already exists");
+    return res.status(500).send({ message: "ID already exists" });
   }
 
   const newUser = {
@@ -122,7 +129,7 @@ exports.register = async (req, res) => {
 
   await db.collection("BOs").insertOne(newUser);
 
-  return res.send("Successfully register new BO account");
+  return res.send({ message: "Successfully register new BO account" });
 };
 
 exports.login = async (req, res) => {
@@ -131,25 +138,29 @@ exports.login = async (req, res) => {
 
   // should handle in frontend
   if (!email || !password) {
-    return res.status(401).send("Missing email address or password");
+    return res
+      .status(401)
+      .send({ message: "Missing email address or password" });
   }
 
   const user = await db.collection("BOs").findOne({ "Email Address": email });
-  
+  console.log({ user });
   if (!user) {
-    return res.status(404).send("Email address not found");
+    return res.status(404).send({ message: "Email address not found" });
   }
 
   const isPassValid = await bcrypt.compare(password, user.Password);
 
   if (!isPassValid) {
-    return res.status(401).send("Invalid email address or password");
+    return res
+      .status(401)
+      .send({ message: "Invalid email address or password" });
   }
 
-  const accessToken = generateToken({userID: user.ID, Role: "BO"});
+  const accessToken = generateToken({ userID: user.ID, Role: "BO" });
 
   const refreshToken = jwt.sign(
-    { userId: user.ID, Role: "BO" },
+    { userID: user.ID, Role: "BO" },
     process.env.REFRESH_TOKEN_KEY
   );
 
@@ -165,32 +176,32 @@ exports.logout = async (req, res) => {
   );
   console.log("refreshTokens array after filtering: ", refreshTokens);
 
-  return res.status(204).send("Logout successfully");
+  return res.status(204).send({ message: "Logout successfully" });
 };
 
 exports.generateAccessToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
 
   if (!refreshToken) {
-    return res.status(401).send("Missing token");
+    return res.status(401).send({ message: "Missing token" });
   }
 
   if (!refreshTokens.includes(refreshToken)) {
-    return res.status(403).send("No permission");
+    return res.status(403).send({ message: "No permission" });
   }
 
   let tokenUser;
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
     if (err) {
-      return res.status(403).send("No permission");
+      return res.status(403).send({ message: "No permission" });
     }
     console.log(user);
 
     tokenUser = user;
   });
 
-  const accessToken = generateToken({userID: tokenUser.userId, Role: "BO"});
+  const accessToken = generateToken({ userID: tokenUser.userId, Role: "BO" });
   console.log("new accessToken: ", accessToken);
 
   return res.send({ accessToken });

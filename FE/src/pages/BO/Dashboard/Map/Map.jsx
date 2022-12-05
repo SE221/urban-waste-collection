@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import axios from "axios";
 import "./marker.css";
+import AuthService from "../../../authen/AuthService";
 
 const geojson = {
   type: "FeatureCollection",
@@ -16,8 +18,21 @@ const Map = () => {
   const [lng, setLng] = useState(106.680879);
   const [lat, setLat] = useState(10.768878);
   const [zoom, setZoom] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // authenticate current user on fe
+    const currentUser = AuthService.getCurrentUser();
+
+    if (!currentUser) {
+      return navigate("/signin");
+    }
+    const config = {
+      headers: {
+        Authorization: "Bearer " + currentUser.access_token,
+      },
+    };
+
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -28,7 +43,7 @@ const Map = () => {
 
     // get mcps data
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`, config)
       .then((res) => {
         const objs = res.data;
         objs.map((obj) => {
@@ -73,7 +88,10 @@ const Map = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.message);
+        if (err.response.status == 403) {
+          return navigate("/signin");
+        }
       });
   }, []);
 
