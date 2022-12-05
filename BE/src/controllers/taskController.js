@@ -15,7 +15,7 @@ exports.findCollectorTask = async (req, res) => {
   const CTasks = await db.collection("CTasks").find({id: req.params.id}).toArray();
   if (!CTasks)
     return res.status(404).send("Task not found");
-  CTasks.listOfMcps = CTasks.listOfMcps.split(", ")
+  CTasks[0].listOfMcps = CTasks[0].listOfMcps.split(", ").map(Number)
   return res.send(CTasks);
 };
 
