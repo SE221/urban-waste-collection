@@ -6,8 +6,8 @@ require("dotenv").config();
 const db = dbo.getDb();
 let refreshTokens = [];
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_KEY, {
+const generateToken = ({ userId, Role }) => {
+  return jwt.sign({ userId, Role }, process.env.ACCESS_TOKEN_KEY, {
     expiresIn: 60 * 60,
   });
 };
@@ -34,13 +34,16 @@ exports.findAllJanitors = async (req, res) => {
 };
 
 exports.findAllWorking = async (req, res) => {
-  const allWorking = await db.collection("Users").find({isWorking: true}).toArray();
+  const allWorking = await db
+    .collection("Users")
+    .find({ isWorking: true })
+    .toArray();
   return res.send(allWorking);
 };
 
 exports.findUser = async (req, res) => {
   var user = await db.collection("Users").findOne({ ID: req.params.id });
-  if (!user){
+  if (!user) {
     user = await db.collection("BOs").findOne({ ID: req.params.id });
   }
   return res.send(user);
@@ -135,7 +138,7 @@ exports.login = async (req, res) => {
   }
 
   const user = await db.collection("BOs").findOne({ "Email Address": email });
-  
+
   if (!user) {
     return res.status(404).send("Email address not found");
   }
@@ -146,7 +149,7 @@ exports.login = async (req, res) => {
     return res.status(401).send("Invalid email address or password");
   }
 
-  const accessToken = generateToken({userID: user.ID, Role: "BO"});
+  const accessToken = generateToken({ userID: user.ID, Role: "BO" });
 
   const refreshToken = jwt.sign(
     { userId: user.ID, Role: "BO" },
@@ -190,7 +193,7 @@ exports.generateAccessToken = async (req, res) => {
     tokenUser = user;
   });
 
-  const accessToken = generateToken({userID: tokenUser.userId, Role: "BO"});
+  const accessToken = generateToken({ userID: tokenUser.userId, Role: "BO" });
   console.log("new accessToken: ", accessToken);
 
   return res.send({ accessToken });
