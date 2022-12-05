@@ -1,16 +1,25 @@
 const express = require("express");
-const mcpController = require("../controllers/mcpController");
+const taskController = require("../controllers/taskController");
 const { auth } = require("../helper/auth");
 
 const router = express.Router();
 
-// get all MCPs (!!! including BO !!!)
-router.get("/mcps", auth, mcpController.findAllMcps);
+// create tasks for collector
+router.post("/create-ctask", auth, taskController.createCTask);
 
-// get all overloaded MCPs
-router.get("/overloaded-mcps", auth, mcpController.findAllOverloadedMcps);
+// create tasks for janitor
+router.post("/create-jtask", auth, taskController.createJTask);
 
-// get one MCP by id
-router.get("/mcps/:id", auth, mcpController.findMcp);
+// get all tasks of collector
+router.get("/ctasks", auth, taskController.findAllCollectorTasks);
+
+// get all tasks of janitor
+router.get("/jtasks", auth, taskController.findAllJanitorTasks);
+
+// get one task by task id (Collector)
+router.get("/ctasks/:id", auth, taskController.findCollectorTask);
+
+// get one task by task id (Janitor)
+router.get("/jtasks/:id", auth, taskController.findJanitorTask);
 
 module.exports = router;
