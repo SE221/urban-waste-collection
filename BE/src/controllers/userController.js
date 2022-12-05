@@ -20,7 +20,7 @@ exports.findAllWorkers = async (req, res) => {
 exports.findAllCollectors = async (req, res) => {
   const allCollectors = await db
     .collection("Users")
-    .find({ Role: Collector })
+    .find({ Role: "Collector" })
     .toArray();
   return res.send(allCollectors);
 };
@@ -28,7 +28,7 @@ exports.findAllCollectors = async (req, res) => {
 exports.findAllJanitors = async (req, res) => {
   const allJanitors = await db
     .collection("Users")
-    .find({ Role: Janitor })
+    .find({ Role: "Janitor" })
     .toArray();
   return res.send(allJanitors);
 };
