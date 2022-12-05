@@ -34,13 +34,16 @@ exports.findAllJanitors = async (req, res) => {
 };
 
 exports.findAllWorking = async (req, res) => {
-  const allWorking = await db.collection("Users").find({isWorking: true}).toArray();
+  const allWorking = await db
+    .collection("Users")
+    .find({ isWorking: true })
+    .toArray();
   return res.send(allWorking);
 };
 
 exports.findUser = async (req, res) => {
   var user = await db.collection("Users").findOne({ ID: req.params.id });
-  if (!user){
+  if (!user) {
     user = await db.collection("BOs").findOne({ ID: req.params.id });
   }
   return res.send(user);
@@ -131,22 +134,26 @@ exports.login = async (req, res) => {
 
   // should handle in frontend
   if (!email || !password) {
-    return res.status(401).send("Missing email address or password");
+    return res
+      .status(401)
+      .send({ message: "Missing email address or password" });
   }
 
   const user = await db.collection("BOs").findOne({ "Email Address": email });
-  
+  console.log({ user });
   if (!user) {
-    return res.status(404).send("Email address not found");
+    return res.status(404).send({ message: "Email address not found" });
   }
 
   const isPassValid = await bcrypt.compare(password, user.Password);
 
   if (!isPassValid) {
-    return res.status(401).send("Invalid email address or password");
+    return res
+      .status(401)
+      .send({ message: "Invalid email address or password" });
   }
 
-  const accessToken = generateToken({userID: user.ID, Role: "BO"});
+  const accessToken = generateToken({ userID: user.ID, Role: "BO" });
 
   const refreshToken = jwt.sign(
     { userId: user.ID, Role: "BO" },
@@ -190,7 +197,7 @@ exports.generateAccessToken = async (req, res) => {
     tokenUser = user;
   });
 
-  const accessToken = generateToken({userID: tokenUser.userId, Role: "BO"});
+  const accessToken = generateToken({ userID: tokenUser.userId, Role: "BO" });
   console.log("new accessToken: ", accessToken);
 
   return res.send({ accessToken });
