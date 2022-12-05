@@ -1,23 +1,36 @@
-// import { React } from "react";
-import Sidebar from "../../../components/Sidebar/Sidebar";
-import Navbar from "../../../components/Navbar/Navbar";
-import "../../Tool/tool.css";
-
 import React, { useState, useEffect } from "react";
 import { COLUMNS } from "./utils/columns";
 import { Table } from "../../../components/Table/Table.jsx";
 import axios from "axios";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../../components/Navbar/Navbar";
+import "../../Tool/tool.css";
+import AuthService from "../../authen/AuthService";
 
 const MCP = () => {
   const [mcps, setMcps] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [mcpsPerPage, setMcpsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // authenticate current user on fe
+    const currentUser = AuthService.getCurrentUser();
+
+    if (!currentUser) {
+      return navigate("/403");
+    }
+    const config = {
+      headers: {
+        Authorization: "Bearer " + currentUser.access_token,
+      },
+    };
+
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/mcps`, config)
       .then((res) => {
         setLoading(false);
         const objs = res.data;
@@ -35,7 +48,10 @@ const MCP = () => {
         setMcps(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.message);
+        if (err.response.status == 403) {
+          return navigate("/403");
+        }
       });
   }, []);
 
