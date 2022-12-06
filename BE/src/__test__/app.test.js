@@ -231,7 +231,9 @@ afterAll(async () => {
 describe("Test users route API: ", () => {
   describe("GET /api/workers", () => {
     test("It should return 99 workers information", async () => {
-      const response = await request(app).get("/api/workers");
+      const response = await request(app)
+        .get("/api/workers")
+        .set("Authorization", `Bearer ${accessToken}`);
       const workers = response.body;
       expect(response.statusCode).toBe(200);
       expect(workers).toHaveLength(99);
@@ -255,12 +257,12 @@ describe("Test users route API: ", () => {
       expect(response.statusCode).toBe(403);
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get("/api/working")
         .set("Authorization", `Bearer ${""}`);
 
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
   });
 
@@ -278,11 +280,11 @@ describe("Test users route API: ", () => {
       }
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get(`/api/user/${"C0762"}`)
         .set("Authorization", `Bearer ${""}`);
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
@@ -315,12 +317,12 @@ describe("\nTest MCPs route API: ", () => {
       expect(mcps).toHaveLength(24);
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get("/api/mcps")
         .set("Authorization", `Bearer ${""}`);
       const mcps = response.body;
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
@@ -346,11 +348,11 @@ describe("\nTest MCPs route API: ", () => {
       }
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get(`/api/mcps/${"M5844"}`)
         .set("Authorization", `Bearer ${""}`);
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
@@ -380,11 +382,11 @@ describe("\nTest MCPs route API: ", () => {
       expect(overloadedMcps).toHaveLength(13);
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get("/api/overloaded-mcps")
         .set("Authorization", `Bearer ${""}`);
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
@@ -409,11 +411,11 @@ describe("\nTest Vehicles route API: ", () => {
       expect(vehicles).toHaveLength(10);
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get("/api/vehicles")
         .set("Authorization", `Bearer ${""}`);
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
@@ -438,11 +440,11 @@ describe("\nTest Vehicles route API: ", () => {
       }
     });
 
-    test("It should return 401 when missing token", async () => {
+    test("It should return 403 when missing token", async () => {
       const response = await request(app)
         .get(`/api/vehicles/${"V1089"}`)
         .set("Authorization", `Bearer ${""}`);
-      expect(response.statusCode).toBe(401);
+      expect(response.statusCode).toBe(403);
     });
 
     test("It should return 403 when given invalid token", async () => {
