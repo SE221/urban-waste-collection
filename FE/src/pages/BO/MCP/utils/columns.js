@@ -23,8 +23,8 @@ export const COLUMNS = [
     Header: "Overloaded Time",
     accessor: "time",
   },
-  {
-    Header: "Map Location",
-    accessor: "location",
-  },
+  // {
+  //   Header: "Map Location",
+  //   accessor: "location",
+  // },
 ];

@@ -167,7 +167,7 @@ const Task = (props) => {
                 <Form.Label>Collector ID: </Form.Label>
                 <Form.Control value={ctask.CollectorID} disabled />
                 <Form.Label>Collector Name: </Form.Label>
-                <Form.Control value={ctask.id} disabled />
+                <Form.Control value={ctask.CollectorName} disabled />
                 <Form.Label>List Of MCPs: </Form.Label>
                 <Form.Control value={ctask.listOfMcps} disabled />
                 <Button
