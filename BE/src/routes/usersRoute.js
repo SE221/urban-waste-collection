@@ -7,6 +7,9 @@ const router = express.Router();
 // get all workers
 router.get("/workers", auth, userController.findAllWorkers);
 
+// get all collectors
+router.get("/collectors", auth, userController.findAllCollectors);
+
 // get all working workers
 router.get("/working", auth, userController.findAllWorking);
 

@@ -56,7 +56,10 @@ const Sidebar = (props) => {
               <span>MCPs</span>
             </li>
           </Link>
-          <Link to="/task-assignment" style={{ textDecoration: "none" }}>
+          <Link
+            to="/task-assignment/mcp-assignment"
+            style={{ textDecoration: "none" }}
+          >
             <li className="tab">
               <FontAwesomeIcon icon={faCircleArrowDown} className="side-icon" />
               <span>Task Assignment</span>
