@@ -1,47 +1,56 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./authen.css";
 
-export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [password, setPassword] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordError, setpasswordError] = useState("");
-  const [emailError, setemailError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleValidation = (event) => {
     let formIsValid = true;
 
-    if (
-      !username.match(/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
-    ) {
+    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
       formIsValid = false;
-      setUsernameError("Username Not Valid");
+      setEmailError("Email Not Valid");
       return false;
     } else {
-      setUsernameError("");
+      setEmailError("");
       formIsValid = true;
     }
 
-    if (!email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
+    if (!password.match(/^.{6,}$/)) {
       formIsValid = false;
-      setemailError("Email Not Valid");
-      return false;
-    } else {
-      setemailError("");
-      formIsValid = true;
-    }
-
-    if (!password.match(/^[a-zA-Z]{8,22}$/)) {
-      formIsValid = false;
-      setpasswordError(
-        "Only Letters and length must best min 8 Chracters and Max 22 Chracters"
-      );
+      setpasswordError("Password must be at least 6 characters");
       return false;
     } else {
       setpasswordError("");
+      formIsValid = true;
+    }
+
+    if (!confirmPassword.match(/^.{6,}$/)) {
+      formIsValid = false;
+      setConfirmPasswordError("Password must be at least 6 characters");
+      return false;
+    } else {
+      setConfirmPasswordError("");
+      formIsValid = true;
+    }
+
+    // check if password is the same as confirmPassword
+    if (confirmPassword !== password) {
+      formIsValid = false;
+      setConfirmPasswordError("Confirm password does not match with password");
+      return false;
+    } else {
+      setConfirmPasswordError("");
       formIsValid = true;
     }
 
@@ -50,24 +59,48 @@ export default function Signup() {
 
   const signupSubmit = (e) => {
     e.preventDefault();
-    handleValidation();
+    const isValid = handleValidation();
+    if (isValid) {
+      axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/api/register`, {
+          email,
+          password,
+          confirmPassword,
+        })
+        .then((res) => {
+          navigate("/signin");
+        })
+        .catch((err) => {
+          console.log({ err });
+          setErrorMessage(err.response.data.message);
+        });
+    }
+  };
+
+  const hidePopup = () => {
+    let closebtn = document.querySelector(".closebtn");
+    return (closebtn.parentElement.style.display = "none");
   };
 
   return (
-    // <div className="App">
-
     <div className="App">
+      {errorMessage && (
+        <div className="alert text-center">
+          <span className="closebtn" onClick={hidePopup}>
+            &times;
+          </span>
+          {errorMessage}
+        </div>
+      )}
       <div className="container mb-4">
         <div className="row mt-lg-n12 mt-md-n12 mt-n12 justify-content-center">
           <div className="col-xl-4 col-lg-5 col-md-7 mx-auto">
             <div className="card mt-8">
               <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div className="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center py-4">
-                  <h4 class="font-weight-bolder text-white mt-1">Sign Up</h4>
-                  <p class="mb-1 text-sm text-white"> Add your credentials </p>
-                </div>
+                <h4 className="authen-title-text font-weight-bolder mt-1">
+                  Sign up
+                </h4>
               </div>
-
               <div className="card-body">
                 <form
                   method="post"
@@ -76,25 +109,10 @@ export default function Signup() {
                   onSubmit={signupSubmit}
                 >
                   <div className="input-group input-group-static mb-4">
-                    <label>Username</label>
+                    <label className="label-text">Email</label>
                     <input
-                      type="text"
+                      type="email"
                       className="form-control"
-                      id="username_login"
-                      // placeholder="Enter username"
-                      onChange={(event) => setUsername(event.target.value)}
-                    />
-                    <small id="emailHelp" className="text-danger form-text">
-                      {usernameError}
-                    </small>
-                  </div>
-                  <div className="input-group input-group-static mb-4">
-                    <label>Email </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="email_login"
-                      // placeholder="Enter username"
                       onChange={(event) => setEmail(event.target.value)}
                     />
                     <small id="emailHelp" className="text-danger form-text">
@@ -102,53 +120,49 @@ export default function Signup() {
                     </small>
                   </div>
                   <div className="input-group input-group-static mb-4">
-                    <label>Password</label>
+                    <label className="label-text">Password</label>
                     <input
                       type="password"
                       className="form-control"
                       id="pwd_login"
-                      // placeholder="Password"
                       onChange={(event) => setPassword(event.target.value)}
                     />
                     <small id="passworderror" className="text-danger form-text">
                       {passwordError}
                     </small>
                   </div>
-                  {/* TODO: handle comfirm password */}
                   <div className="input-group input-group-static mb-4">
-                    <label>Confirm Password</label>
+                    <label className="label-text">Confirm Password</label>
                     <input
                       type="password"
                       className="form-control"
                       id="pwd_login"
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={(event) =>
+                        setConfirmPassword(event.target.value)
+                      }
                     />
                     <small id="passworderror" className="text-danger form-text">
-                      {passwordError}
+                      {confirmPasswordError}
                     </small>
                   </div>
-                  <div class="col itext-center">
+
+                  <div className="col itext-center">
                     <button
                       type="submit"
-                      className="btn bg-gradient-dark w-100 mt-3 mb-0"
+                      className="btn signin-btn w-100 mt-3 mb-0 text-white"
                     >
                       Sign up
                     </button>
                   </div>
                 </form>
               </div>
-              <div className="card-footer text-center pt-0 px-lg-2 px-1">
+              <div className="card-footer pt-0 px-lg-2 px-1">
                 <div className="mb-4 text-sm mx-auto">
-                  {/* <a
-                    href="login"
-                    class="text-primary text-gradient font-weight-bold"
+                  <Link
+                    to="/signin"
+                    className="signin-text text-primary font-weight-bold"
                   >
-                    Already has an account?
-                  </a> */}
-                  <Link to="/login">
-                    <p className="text-primary text-gradient font-weight-bold">
-                      Already has an account?
-                    </p>
+                    Already have an account? Sign in.
                   </Link>
                 </div>
               </div>
@@ -158,7 +172,6 @@ export default function Signup() {
       </div>
     </div>
   );
-}
-// export default Login;
+};
 
-// export Login;
+export default Login;
