@@ -57,3 +57,14 @@ To connect with the Back-end, you will need the following lines in your ".env" f
 REACT_APP_BACKEND_URL=http://localhost:1337
 REACT_APP_MAPBOX_ACCESS_TOKEN=YourMapboxAccessTokenProvidedByMapbox
 ```
+### Start the app
+First, start the BE server:
+```{bash}
+cd BE
+npm start
+```
+Then, start the FE:
+```{bash}
+cd FE
+npm start
+```
