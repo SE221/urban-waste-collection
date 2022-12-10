@@ -43,7 +43,7 @@ In the ".env" file, add the following:
 ```
 ACCESS_TOKEN_KEY=ARandomString64BytesLong
 REFRESH_TOKEN_KEY=AnotherRandomString64BytesLong
-mongodb+srv://guest_user:xfQhVsUz2deIo3OY@cluster1.qajpv6r.mongodb.net/?retryWrites=true&w=majority
+ATLAS_URI=mongodb+srv://guest_user:xfQhVsUz2deIo3OY@cluster1.qajpv6r.mongodb.net/?retryWrites=true&w=majority
 ```
 *Note*: You should keep your **ACCESS_TOKEN_KEY** and **REFRESH_TOKEN_KEY** as this is the key of authentication
 
