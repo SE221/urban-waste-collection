@@ -71,9 +71,16 @@ cd FE
 npm start
 ```
 
-### Testing
+### Demo the app
 If you want to try the app, you can login with following information:
 ```
 username: binguyen@gmail.com
 password: 12345678
+```
+
+### Testing
+To perform unit testing on our back-end API, you can use the following command:
+```{bash}
+cd BE
+npm test
 ```
