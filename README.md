@@ -9,6 +9,8 @@ The project is to deliver an upgraded version of UWC 1.0 with more features, fri
 - To sketch the diagram and draw wireframe, we used [draw.io](https://www.draw.io) (support UML 2.5) and AI-powered platform [Visily](https://www.visily.ai), respectively.
 
 ## Run locally
+### Prerequisites
+Make sure your devices has the latest version of **npm**
 ### Clone the repository
 ```{bash}
 git clone https://github.com/SE221/urban-waste-collection.git
