@@ -51,7 +51,7 @@ ATLAS_URI=mongodb+srv://guest_user:xfQhVsUz2deIo3OY@cluster1.qajpv6r.mongodb.net
 To be able to see the map, you should have **your own Mapbox Access Token**.
 First, you also need to create an ".env" in your FE folder:
 ```{bash}
-cd BE
+cd FE
 nano .env
 ```
 To connect with the Back-end, you will need the following lines in your ".env" file:
