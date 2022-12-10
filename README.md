@@ -26,7 +26,7 @@ npm install
 cd BE
 npm install
 ```
-*Note*: If error happens when running the below command, try the following instead:
+*Note*: If error happens when running above commands, try the following instead:
 ```{bash}
 npm install --force
 ```
