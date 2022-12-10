@@ -70,3 +70,10 @@ Then, start the FE:
 cd FE
 npm start
 ```
+
+### Testing
+If you want to try the app, you can login with following information:
+```
+username: binguyen@gmail.com
+password: 12345678
+```
